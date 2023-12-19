@@ -18,7 +18,7 @@ class Ulaznica extends Model
     ];
     public function tip()
     {
-        return $this->belongsTo(TipUlaznice::class, 'tip');
+        return $this->belongsTo(TipUlaznice::class);
     }
 
     public function korisnik()

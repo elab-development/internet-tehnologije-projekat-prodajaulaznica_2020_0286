@@ -9,7 +9,7 @@ class TipUlaznice extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'naziv', 
+        'nazivTipaUlaznice', 
     ];
 
 

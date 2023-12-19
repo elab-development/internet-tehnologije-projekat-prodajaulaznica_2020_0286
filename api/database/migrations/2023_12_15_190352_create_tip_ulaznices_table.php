@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTipDogodjajasTable extends Migration
+class CreateTipUlaznicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class CreateTipDogodjajasTable extends Migration
      */
     public function up()
     {
-        Schema::create('tip_dogodjajas', function (Blueprint $table) {
+        Schema::create('tip_ulaznices', function (Blueprint $table) {
             $table->id();
+            $table->string('naziv');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ class CreateTipDogodjajasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tip_dogodjajas');
+        Schema::dropIfExists('tip_ulaznices');
     }
 }

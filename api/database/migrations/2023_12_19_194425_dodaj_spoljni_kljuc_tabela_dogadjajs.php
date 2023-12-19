@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDogadjajsTable extends Migration
+class DodajSpoljniKljucTabelaDogadjajs extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,8 @@ class CreateDogadjajsTable extends Migration
      */
     public function up()
     {
-        Schema::create('dogadjajs', function (Blueprint $table) {
-            $table->id();
-            $table->string('naziv');
-            $table->dateTime('datumVreme');
-            $table->string('mesto');
+        Schema::table('dogadjajs', function (Blueprint $table) { 
             $table->unsignedBigInteger('tip');  
-            $table->string('organizator');  
-            $table->text('slika')->nullable(); //"images/koncetr1.jpg"
-            $table->integer('kapacitet');
-            $table->timestamps();
-
-
             $table->foreign('tip')->references('id')->on('tip_dogodjajas');
         });
     }
@@ -36,6 +26,8 @@ class CreateDogadjajsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dogadjajs');
+        Schema::table('dogadjajs', function (Blueprint $table) { 
+            $table->dropForeign(['tip']);
+        });
     }
 }

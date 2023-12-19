@@ -21,7 +21,7 @@ class Dogadjaj extends Model
 
     public function tip()
     {
-        return $this->belongsTo(TipDogodjaja::class, 'tip');
+        return $this->belongsTo(TipDogodjaja::class);
     }
 
 }
