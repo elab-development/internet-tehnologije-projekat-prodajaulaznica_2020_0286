@@ -15,9 +15,7 @@ class CreateUlaznicasTable extends Migration
     {
         Schema::create('ulaznicas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('dogadjaj');
-            $table->unsignedBigInteger('korisnik');
-            $table->unsignedBigInteger('tip');
+           
 
             $table->dateTime('datumKupovine');
             $table->decimal('cena', 8, 2);

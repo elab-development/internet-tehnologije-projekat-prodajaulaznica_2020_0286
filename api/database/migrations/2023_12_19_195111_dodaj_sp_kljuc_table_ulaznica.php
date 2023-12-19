@@ -14,12 +14,12 @@ class DodajSpKljucTableUlaznica extends Migration
     public function up()
     {
         Schema::table('ulaznicas', function (Blueprint $table) {
-            $table->unsignedBigInteger('dogadjaj');
-            $table->unsignedBigInteger('korisnik');
-            $table->unsignedBigInteger('tip');
-            $table->foreign('dogadjaj')->references('id')->on('dogadjajs');
-            $table->foreign('korisnik')->references('id')->on('users');
-            $table->foreign('tip')->references('id')->on('tip_ulaznices');
+           // $table->unsignedBigInteger('dogadjaj');
+        //    $table->unsignedBigInteger('korisnik');
+         //   $table->unsignedBigInteger('tip');
+         //   $table->foreign('dogadjaj')->references('id')->on('dogadjajs');
+         //   $table->foreign('korisnik')->references('id')->on('users');
+         //   $table->foreign('tip')->references('id')->on('tip_ulaznices');
         });
     }
 
@@ -31,9 +31,9 @@ class DodajSpKljucTableUlaznica extends Migration
     public function down()
     {
         Schema::table('ulaznicas', function (Blueprint $table) {
-            $table->dropForeign(['dogadjaj']);
-            $table->dropForeign(['korisnik']);
-            $table->dropForeign(['tip']);
+         //   $table->dropForeign(['dogadjaj']);
+         //   $table->dropForeign(['korisnik']);
+         //   $table->dropForeign(['tip']);
             
         });
     }

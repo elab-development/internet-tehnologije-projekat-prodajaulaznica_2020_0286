@@ -19,9 +19,9 @@ class Dogadjaj extends Model
         'kapacitet' 
     ];
 
-    public function tip()
-    {
-        return $this->belongsTo(TipDogodjaja::class);
-    }
+    // // public function tip()
+    // // {
+    // //     return $this->belongsTo(TipDogodjaja::class);
+    // // }
 
 }

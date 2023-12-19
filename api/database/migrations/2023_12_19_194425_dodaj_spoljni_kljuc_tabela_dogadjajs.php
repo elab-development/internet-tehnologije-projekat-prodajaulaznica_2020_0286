@@ -14,8 +14,8 @@ class DodajSpoljniKljucTabelaDogadjajs extends Migration
     public function up()
     {
         Schema::table('dogadjajs', function (Blueprint $table) { 
-            $table->unsignedBigInteger('tip');  
-            $table->foreign('tip')->references('id')->on('tip_dogodjajas');
+            
+           // $table->foreignId('tip');
         });
     }
 
@@ -27,7 +27,7 @@ class DodajSpoljniKljucTabelaDogadjajs extends Migration
     public function down()
     {
         Schema::table('dogadjajs', function (Blueprint $table) { 
-            $table->dropForeign(['tip']);
+           // $table->dropForeign(['tip']);
         });
     }
 }

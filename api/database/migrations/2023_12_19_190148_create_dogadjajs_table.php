@@ -18,14 +18,12 @@ class CreateDogadjajsTable extends Migration
             $table->string('naziv');
             $table->dateTime('datumVreme');
             $table->string('mesto');
-            $table->unsignedBigInteger('tip');  
+          
             $table->string('organizator');  
             $table->text('slika')->nullable(); //"images/koncetr1.jpg"
             $table->integer('kapacitet');
-            $table->timestamps();
-
-
-            $table->foreign('tip')->references('id')->on('tip_dogodjajas');
+            $table->timestamps(); 
+             
         });
     }
 

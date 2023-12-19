@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\TipUlaznice;
 use Illuminate\Database\Seeder;
 
 class TipUlazniceSeeder extends Seeder
@@ -13,6 +14,20 @@ class TipUlazniceSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $tipoviUlaznica = [
+            'Standard',
+            'VIP',
+            'Premium',
+            'Group',
+            'Student'
+        ];
+
+
+        foreach ($tipoviUlaznica as $tip) {
+            TipUlaznice::create(['nazivTipaUlaznice' => $tip]);
+        }
+
+
+
     }
 }

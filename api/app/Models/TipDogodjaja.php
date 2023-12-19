@@ -9,7 +9,7 @@ class TipDogodjaja extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'naziv', 
+        'nazivTipaDogadjaja', 
     ];
 
     public function dogadjaji()
