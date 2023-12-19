@@ -16,9 +16,12 @@ class Dogadjaj extends Model
         'tip',
         'organizator',
         'slika',
-        'kapacitet'
-
+        'kapacitet' 
     ];
 
+    public function tip()
+    {
+        return $this->belongsTo(TipDogodjaja::class, 'tip');
+    }
 
 }

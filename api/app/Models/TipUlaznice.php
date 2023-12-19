@@ -11,4 +11,11 @@ class TipUlaznice extends Model
     protected $fillable = [
         'naziv', 
     ];
+
+
+    public function ulaznice()
+    {
+        return $this->hasMany(Ulaznica::class);
+    }
+
 }

@@ -11,4 +11,9 @@ class TipDogodjaja extends Model
     protected $fillable = [
         'naziv', 
     ];
+
+    public function dogadjaji()
+    {
+        return $this->hasMany(Dogadjaj::class);
+    }
 }
