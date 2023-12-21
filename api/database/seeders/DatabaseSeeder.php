@@ -2,10 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Models\Dogadjaj;
 use App\Models\TipDogodjaja;
 use App\Models\TipUlaznice;
+use App\Models\Ulaznica;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
@@ -18,13 +21,22 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+        
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Ulaznica::truncate();
+        Dogadjaj::truncate();
+        User::truncate();
 
-        User::create([
+        TipDogodjaja::truncate();
+        TipUlaznice::truncate();
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+         User::create([
             'name' => 'pera',
             'email' => 'pera@gmail.com',
             'password' => Hash::make('pera'),
             'kontakt' => '061254781',
-            'adresa'=>'Adresa 1'
+        
             
         ]);
         User::create([
@@ -33,15 +45,13 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('zika'),
             'kontakt' => '061254781',
             'uloga'=>'admin' ,
-            'adresa'=>'Adresa 1'
+         
         ]);
-
-
-        $this->call(TipDogodjaja::class);
-        $this->call(TipUlaznice::class);
+        $this->call(TipDogodjajaSeeder::class);
+        $this->call(TipUlazniceSeeder::class);
         $this->call(DogadjajSeeder::class);
         $this->call(UlaznicaSeeder::class);
-
+           
 
     }
 }

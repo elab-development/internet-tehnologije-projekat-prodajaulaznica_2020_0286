@@ -23,11 +23,11 @@ class Ulaznica extends Model
 
     public function korisnik()
     {
-        return $this->belongsTo(User::class, 'korisnik');
+        return $this->belongsTo(User::class);
     }
     public function dogadjaj()
     {
-        return $this->belongsTo(Dogadjaj::class, 'dogadjaj');
+        return $this->belongsTo(Dogadjaj::class);
     }
 
 
