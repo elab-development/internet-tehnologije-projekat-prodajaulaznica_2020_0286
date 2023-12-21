@@ -49,6 +49,11 @@ class DogadjajController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 400);
         }
+      
+
+
+
+
         $dogadjaj = Dogadjaj::create([
             'naziv' => $request->input('naziv'),
             'datumVreme' => $request->input('datumVreme'),
@@ -57,7 +62,12 @@ class DogadjajController extends Controller
             'organizator' => $request->input('organizator'),
             'kapacitet' => $request->input('kapacitet'),
         ]);
-
+        if ($request->hasFile('slika')) {
+            $slika = $request->file('slika');
+            $slikaIme = time() . '_' . $slika->getClientOriginalName();
+            $slika->storeAs('slike', $slikaIme, 'public');  
+            $dogadjaj->update(['slika' => $slikaIme]);
+        }
         return response()->json([
             'message' => 'Uspesno kreiran dogadjaj',
             'dogadjaj' => new DogadjajResource($dogadjaj)
@@ -122,6 +132,12 @@ class DogadjajController extends Controller
                 'organizator' => $request->input('organizator'),
                 'kapacitet' => $request->input('kapacitet'),
             ]);
+            if ($request->hasFile('slika')) {
+                $slika = $request->file('slika');
+                $slikaIme = time() . '_' . $slika->getClientOriginalName();
+                $slika->storeAs('slike', $slikaIme, 'public');  
+                $d->update(['slika' => $slikaIme]);
+            }
     
             return response()->json([
                 'message' => 'Uspesno azuriran dogadjaj',
