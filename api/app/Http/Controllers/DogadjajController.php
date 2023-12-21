@@ -164,4 +164,33 @@ class DogadjajController extends Controller
         }
         return response()->json(['message' => 'GRESKA'], 404);
     }
+    public function pretraga(Request $request)
+    {
+        
+        $request->validate([
+            'termin' => 'nullable|string',  
+            'tip' => 'nullable|exists:tip_dogodjajas,id',  
+        ]);
+
+       
+        $query = Dogadjaj::query();
+
+       
+        if ($request->has('termin')) {
+            $termin = $request->input('termin');
+            $query->where('naziv', 'LIKE', "%$termin%")
+                ->orWhere('organizator', 'LIKE', "%$termin%");
+        }
+
+        if ($request->has('tip')) {
+            $tip = $request->input('tip');
+            $query->where('tip', $tip);
+        }
+
+         
+        $dogadjaji = $query->paginate(2);
+
+        return DogadjajResource::collection($dogadjaji);
+}
+
 }

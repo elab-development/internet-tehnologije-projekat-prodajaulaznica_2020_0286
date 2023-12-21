@@ -29,7 +29,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/dogadjaji', [DogadjajController::class, 'index']);  
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-
+Route::get('/dogadjaji/pretraga', [DogadjajController::class, 'pretraga']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::resource('tipoviDogadjaja', TipDogadjajaController::class);
