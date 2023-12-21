@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UlaznicaResource;
 use App\Models\TipUlaznice;
 use App\Models\Ulaznica;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class UlaznicaController extends Controller
 {
@@ -15,7 +17,8 @@ class UlaznicaController extends Controller
      */
     public function index()
     {
-        //
+        $ulaznice = Ulaznica::all();
+        return UlaznicaResource::collection($ulaznice);
     }
 
     /**
@@ -36,17 +39,29 @@ class UlaznicaController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nazivTipaUlaznice' => 'required|string|unique:tip_ulaznices',
+        $validator = Validator::make($request->all(), [
+            'dogadjaj' => 'required|exists:dogadjajs,id',
+            'korisnik' => 'required|exists:users,id',
+            'tip' => 'required|exists:tip_ulaznices,id',
+            'datumKupovine' => 'required|date',
+            'cena' => 'required|numeric|min:0',
         ]);
     
-        $tipUlaznice = TipUlaznice::create([
-            'nazivTipaUlaznice' => $request->input('nazivTipaUlaznice'),
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+    
+        $ulaznica = Ulaznica::create([
+            'dogadjaj' => $request->input('dogadjaj'),
+            'korisnik' => $request->input('korisnik'),
+            'tip' => $request->input('tip'),
+            'datumKupovine' => $request->input('datumKupovine'),
+            'cena' => $request->input('cena'),
         ]);
     
         return response()->json([
-            'message' => 'Tip ulaznice uspešno kreiran',
-            'tipUlaznice' => $tipUlaznice,
+            'message' => 'Ulaznica uspešno kreirana',
+            'ulaznica' => new UlaznicaResource($ulaznica),
         ], 201);
     }
 
@@ -56,9 +71,15 @@ class UlaznicaController extends Controller
      * @param  \App\Models\Ulaznica  $ulaznica
      * @return \Illuminate\Http\Response
      */
-    public function show(Ulaznica $ulaznica)
+    public function show($id)
     {
-        //
+        $ulaznica = Ulaznica::find($id);
+
+        if (!$ulaznica) {
+            return response()->json(['message' => 'Ulaznica nije pronađena'], 404);
+        }
+    
+        return new UlaznicaResource($ulaznica);
     }
 
     /**
@@ -81,19 +102,35 @@ class UlaznicaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'nazivTipaUlaznice' => 'required|string|unique:tip_ulaznices,nazivTipaUlaznice,',
+        $ulaznica = Ulaznica::find($id);
+
+        if (!$ulaznica) {
+            return response()->json(['message' => 'Ulaznica nije pronađena'], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'dogadjaj' => 'exists:dogadjajs,id',
+            'korisnik' => 'exists:users,id',
+            'tip' => 'exists:tip_ulaznices,id',
+            'datumKupovine' => 'date',
+            'cena' => 'numeric|min:0',
         ]);
-        $tipUlaznice =  TipUlaznice::find($id);
-        $tipUlaznice->update([
-            'nazivTipaUlaznice' => $request->input('nazivTipaUlaznice'),
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
+        $ulaznica->update([
+            'dogadjaj' => $request->input('dogadjaj'),
+            'korisnik' => $request->input('korisnik'),
+            'tip' => $request->input('tip'),
+            'datumKupovine' => $request->input('datumKupovine'),
+            'cena' => $request->input('cena'),
         ]);
-    
-        return response()->json([
-            'message' => 'Tip ulaznice uspešno ažuriran',
-            'tipUlaznice' => $tipUlaznice,
-        ], 200);
+
+        return response()->json(['message' => 'Ulaznica uspešno ažurirana'], 200);
     }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -103,9 +140,14 @@ class UlaznicaController extends Controller
      */
     public function destroy($id)
     {
-        $tipUlaznice =  TipUlaznice::find($id);
-        $tipUlaznice->delete();
+        $ulaznica = Ulaznica::find($id);
 
-        return response()->json(['message' => 'Tip ulaznice uspešno obrisan'], 200);
+        if (!$ulaznica) {
+            return response()->json(['message' => 'Ulaznica nije pronađena'], 404);
+        }
+
+        $ulaznica->delete();
+
+        return response()->json(['message' => 'Ulaznica uspešno obrisana'], 200);
     }
 }

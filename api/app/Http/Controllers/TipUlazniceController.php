@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TipUlaznice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class TipUlazniceController extends Controller
 {
@@ -80,9 +81,14 @@ class TipUlazniceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'nazivTipaUlaznice' => 'required|string|unique:tip_ulaznices,nazivTipaUlaznice,',
+        $validator = Validator::make($request->all(), [
+            'nazivTipaUlaznice' => 'required|string|unique:tip_ulaznices,nazivTipaDogadjaja,',
         ]);
+    
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        } 
+
         $tipUlaznice =  TipUlaznice::find($id);
         $tipUlaznice->update([
             'nazivTipaUlaznice' => $request->input('nazivTipaUlaznice'),

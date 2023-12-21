@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TipDogodjaja;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class TipDogadjajaController extends Controller
 {
@@ -35,7 +36,23 @@ class TipDogadjajaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'nazivTipaDogadjaja' => 'required|string|unique:tip_dogodjajas,nazivTipaDogadjaja,',
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        } 
+
+    
+        $tip = TipDogodjaja::create([
+            'nazivTipaDogadjaja' => $request->input('nazivTipaDogadjaja'),
+        ]);
+    
+        return response()->json([
+            'message' => 'Tip  uspešno kreiran',
+            'tip' => $tip,
+        ], 201);
     }
 
     /**
@@ -69,9 +86,15 @@ class TipDogadjajaController extends Controller
      */
     public function update(Request $request,  $id)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'nazivTipaDogadjaja' => 'required|string|unique:tip_dogodjajas,nazivTipaDogadjaja,',
         ]);
+    
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        } 
+
+
         $obj =  TipDogodjaja::find($id);
         $obj->update([
             'nazivTipaDogadjaja' => $request->input('nazivTipaDogadjaja'),
