@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\DogadjajController;
+use App\Http\Controllers\TipDogadjajaController;
+use App\Http\Controllers\TipUlazniceController;
+use App\Models\TipDogodjaja;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,8 +27,9 @@ use Illuminate\Support\Facades\Route;
 //  Route::put('/dogadjaji/{id}',[DogadjajController::class,'update']);
 
  Route::resource('dogadjaji', DogadjajController::class);
-
-
-
+ Route::resource('tipoviDogadjaja', TipDogadjajaController::class);
+ Route::resource('tipoviUlaznica', TipUlazniceController::class);
 
  
+ 
+
