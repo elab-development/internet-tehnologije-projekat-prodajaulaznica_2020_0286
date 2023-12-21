@@ -101,7 +101,7 @@ class TipDogadjajaController extends Controller
         ]);
     
         return response()->json([
-            'message' => 'Tip ulaznice uspešno ažuriran',
+            'message' => 'Tip  uspešno ažuriran',
             'tipDogadjaja' => $obj,
         ], 200);
     }

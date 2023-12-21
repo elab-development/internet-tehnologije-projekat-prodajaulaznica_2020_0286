@@ -44,7 +44,7 @@ class UlaznicaController extends Controller
             'korisnik' => 'required|exists:users,id',
             'tip' => 'required|exists:tip_ulaznices,id',
             'datumKupovine' => 'required|date',
-            'cena' => 'required|numeric|min:0',
+            'cena' => 'required|numeric|min:1',
         ]);
     
         if ($validator->fails()) {

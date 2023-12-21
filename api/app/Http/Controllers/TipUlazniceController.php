@@ -37,7 +37,7 @@ class TipUlazniceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nazivTipaUlaznice' => 'required|string|unique:tip_ulaznices',
+            'nazivTipaUlaznice' => 'required|string|unique:tip_ulaznices,nazivTipaUlaznice',
         ]);
     
         $tipUlaznice = TipUlaznice::create([
@@ -82,7 +82,7 @@ class TipUlazniceController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'nazivTipaUlaznice' => 'required|string|unique:tip_ulaznices,nazivTipaDogadjaja,',
+            'nazivTipaUlaznice' => 'required|string|unique:tip_ulaznices,nazivTipaDogadjaja',
         ]);
     
         if ($validator->fails()) {
