@@ -1,0 +1,28 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #95A78D; /* Cambridge blue */
+    padding: 10px 20px;
+    color: #D7D0C8; /* Timberwolf */
+}
+
+.nav-logo {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.nav-items {
+    display: flex; /* Dodato da bi stavke bile u liniji */
+    align-items: center; /* Poravnava stavke vertikalno */
+}
+
+.nav-items div {
+    margin: 0 10px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.nav-items div:hover {
+    color: #F87666; /* Bittersweet */
+}

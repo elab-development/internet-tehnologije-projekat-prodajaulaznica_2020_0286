@@ -1,0 +1,45 @@
+.dogadjaj-kartica {
+    border: 1px solid #BD897E;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.dogadjaj-kartica:hover {
+    transform: scale(1.03); 
+}
+
+.dogadjaj-slika-container {
+    position: relative;
+}
+
+.dogadjaj-slika {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.dogadjaj-tip {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #F87666;  
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 15px;  
+    font-size: 0.75em;
+    font-weight: bold;
+}
+
+.dogadjaj-info {
+    padding: 10px;
+    background-color: #C8C6AF;
+    color: #504e4c;
+}
+
+.dogadjaj-info h3 {
+    color: #F87666;  
+    margin-bottom: 5px;
+}
