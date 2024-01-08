@@ -17,9 +17,24 @@ const TabelaDogadjaja = () => {
 
         fetchDogadjaji();
     }, []);
-
+    const obrisiDogadjaj = async (id) => {
+        try {
+            const token = localStorage.getItem('authToken');  
+            await axios.delete(`http://127.0.0.1:8000/api/dogadjaji/${id}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            console.log(id)
+            setDogadjaji(prevDogadjaji => prevDogadjaji.filter(d => d.id !== id));
+        } catch (error) {
+            console.error('Došlo je do greške pri brisanju događaja', error);
+        }
+    };
     return (
-        <table>
+        <>
+             
+            <table>
             <thead>
                 <tr>
                     <th>Naziv</th>
@@ -28,12 +43,16 @@ const TabelaDogadjaja = () => {
                     <th>Tip</th>
                     <th>Organizator</th>
                     <th>Kapacitet</th>
+                    <th>Obrisi</th>
                 </tr>
             </thead>
             <tbody>
-                {dogadjaji.map(dogadjaj => <RedTabele key={dogadjaj.id} dogadjaj={dogadjaj} />)}
+                {dogadjaji.map(dogadjaj => (
+                        <RedTabele key={dogadjaj.id} dogadjaj={dogadjaj} obrisiDogadjaj={obrisiDogadjaj} />
+                    ))}
             </tbody>
-        </table>
+            </table>
+        </>
     );
 }
 

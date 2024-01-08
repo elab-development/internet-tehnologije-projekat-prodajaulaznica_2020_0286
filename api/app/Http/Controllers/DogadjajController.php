@@ -161,8 +161,10 @@ class DogadjajController extends Controller
         $d = Dogadjaj::find($id);
         if($d){
            $d->delete();
+        }else{
+            return response()->json(['message' => 'GRESKA'], 404);
         }
-        return response()->json(['message' => 'GRESKA'], 404);
+       
     }
     public function pretraga(Request $request)
     {

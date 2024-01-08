@@ -20,7 +20,7 @@ const Login = ({token,setToken}) => {
             const response = await axios.post('http://127.0.0.1:8000/api/login', credentials);
             localStorage.setItem('authToken', response.data.token);
             setToken(response.data.token);
-            navigate('/dogadjaji');  
+            navigate('/admin');  
         } catch (error) {
             console.error('Greška prilikom prijavljivanja', error.response.data);
         }
