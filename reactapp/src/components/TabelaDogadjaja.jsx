@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import RedTabele from './RedTabele';
 import './TabelaDogadjaja.css';
+import useDogadjaji from './useDogadjaji';
 const TabelaDogadjaja = () => {
-    const [dogadjaji, setDogadjaji] = useState([]);
+    const { dogadjaji, loading, error, setDogadjaji } = useDogadjaji('http://127.0.0.1:8000/api/dogadjaji');
     const [prikaziModal, setPrikaziModal] = useState(false);
     const [noviDogadjaj, setNoviDogadjaj] = useState({
         naziv: '',
@@ -39,6 +40,8 @@ const TabelaDogadjaja = () => {
     const obrisiDogadjaj = (id) => {
         setDogadjaji(prevDogadjaji => prevDogadjaji.filter(d => d.id !== id));
     };
+    if (loading) return <p>Učitavanje događaja...</p>;
+    if (error) return <p>Došlo je do greške: {error.message}</p>;
     return (
         <>
               <button onClick={() => setPrikaziModal(true)}>Dodaj Novi Događaj</button>
