@@ -6,6 +6,8 @@ import './Dogadjaji.css';
 const Dogadjaji = () => {
     const [dogadjaji, setDogadjaji] = useState([]);
     const [dogadjaji2, setDogadjaji2] = useState([]);
+
+    const [pretraga, setPretraga] = useState('');
     useEffect(() => { //izvlacimo dogadjaje iz nase baze
         const fetchDogadjaji = async () => {
             try {
@@ -20,7 +22,17 @@ const Dogadjaji = () => {
         fetchDogadjaji();
     }, []);
 
- 
+    const handlePretragaChange = (e) => {
+        setPretraga(e.target.value);
+    };
+
+    const filtriraniDogadjaji = dogadjaji.filter(dogadjaj =>
+        dogadjaj.naziv.toLowerCase().includes(pretraga.toLowerCase())
+    );
+
+    const filtriraniDogadjaji2 = dogadjaji2.filter(dogadjaj =>
+        dogadjaj.name.toLowerCase().includes(pretraga.toLowerCase())
+    );
     
     useEffect(() => {
         const fetchRandomEvents = async () => {
@@ -28,8 +40,8 @@ const Dogadjaji = () => {
                 const response = await axios.get('https://app.ticketmaster.com/discovery/v2/events.json', {
                     params: {
                         apikey: 'rQaLInSZHng8AiA3h8qSt41RdHFKBmd3',
-                        size: 25,  
-                        
+                        size: 25,
+                         
                     }
                 });
                 setDogadjaji2(response.data._embedded.events);
@@ -42,23 +54,35 @@ const Dogadjaji = () => {
     }, []);
     
     
+    
 
 
 
     return (
-        <div style={{backgroundColor:"#95A78D"}}> <h2>Nasi Dogadjaji</h2>        <div className="dogadjaji-wrapper">
+        <div style={{backgroundColor:"#95A78D"}}> 
+        <input
+                type="text"
+                placeholder="Pretraži događaje"
+                value={pretraga}
+                onChange={handlePretragaChange}
+                className="pretraga-input"
+            />
+        <h2>Nasi Dogadjaji</h2>       
+        
+         <div className="dogadjaji-wrapper">
             <div className="dogadjaji-container">
                
-                {dogadjaji.map(dogadjaj => (
+                {filtriraniDogadjaji.map(dogadjaj => (
                     <DogadjajKartica key={dogadjaj.id} dogadjaj={dogadjaj} />
                 ))}
             </div>
             <h2>Spoljni Dogadjaji</h2>
             <div className="dogadjaji-container">
               
-                {dogadjaji2.map(dogadjaj => (
+                {filtriraniDogadjaji2.map(dogadjaj => (
                     <div key={dogadjaj.id} className="dogadjaj">
                         <h3>{dogadjaj.name}</h3>
+                        <span className="dogadjaj-tip">{dogadjaj.classifications[0].segment.name}</span>
                         <a href={dogadjaj.url} target="_blank" rel="noopener noreferrer">Više informacija</a>
                         {dogadjaj.images && dogadjaj.images.length > 0 && (
                             <img src={dogadjaj.images[0].url} alt={dogadjaj.name} />
