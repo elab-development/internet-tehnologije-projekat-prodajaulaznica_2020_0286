@@ -3,13 +3,15 @@ import axios from 'axios';
 import DogadjajKartica from './DogadjajKartica';
 import './Dogadjaji.css';
 import Kartica from './Kartica';
-
+import { MdLastPage ,MdFirstPage} from "react-icons/md";
+import { MdNavigateNext } from "react-icons/md";
+import { MdNavigateBefore } from "react-icons/md";
 const Dogadjaji = () => {
     const [dogadjaji, setDogadjaji] = useState([]);
     const [dogadjaji2, setDogadjaji2] = useState([]);
     const [izabranaKategorija, setIzabranaKategorija] = useState('');
-
-
+    const [trenutnaStranica, setTrenutnaStranica] = useState(1);
+    const dogadjajiPoStranici = 10;
     const [pretraga, setPretraga] = useState('');
     useEffect(() => { //izvlacimo dogadjaje iz nase baze
         const fetchDogadjaji = async () => {
@@ -49,8 +51,8 @@ const Dogadjaji = () => {
                 const response = await axios.get('https://app.ticketmaster.com/discovery/v2/events.json', {
                     params: {
                         apikey: 'rQaLInSZHng8AiA3h8qSt41RdHFKBmd3',
-                        size: 200,
-                         
+                        size: dogadjajiPoStranici,
+                        page: trenutnaStranica,
                     }
                 });
                 setDogadjaji2(response.data._embedded.events);
@@ -60,24 +62,29 @@ const Dogadjaji = () => {
         };
     
         fetchRandomEvents();
-    }, []);
+    }, [trenutnaStranica]);
+    const prethodnaStranica = () => {
+        setTrenutnaStranica(prev => (prev > 1 ? prev - 1 : prev));
+    };
+    
+    const sledecaStranica = () => {
+        setTrenutnaStranica(prev => prev + 1);
+    };
+    
+    const prvaStranica = () => {
+        setTrenutnaStranica(1);
+    };
+    
+    const poslednjaStranica = () => {
+        setTrenutnaStranica(25); 
+    };
     
     
     
-
-
-
     return (
-        <div style={{backgroundColor:"#95A78D"}}> 
-        <input
-                type="text"
-                placeholder="Pretraži događaje"
-                value={pretraga}
-                onChange={handlePretragaChange}
-                className="pretraga-input"
-            />
-             <div className="filteri">
-                <label>
+        <div style={{backgroundColor:"#95A78D", display: 'flex'}}> 
+            <div className="filteri">
+            <label>
                     <input
                         type="radio"
                         value=""
@@ -101,28 +108,47 @@ const Dogadjaji = () => {
                         onChange={handleKategorijaChange}
                     /> Music
                 </label>
-               
+                <label>
+                    <input
+                        type="radio"
+                        value="Music"
+                        checked={izabranaKategorija === 'Music'}
+                        onChange={handleKategorijaChange}
+                    /> Miscellaneous
+                </label>
             </div>
-        <h2>Nasi Dogadjaji</h2>       
-        
-         <div className="dogadjaji-wrapper">
-            <div className="dogadjaji-container">
-               
-                {filtriraniDogadjaji.map(dogadjaj => (
-                    <DogadjajKartica key={dogadjaj.id} dogadjaj={dogadjaj} />
-                ))}
-            </div>
-            <h2>Spoljni Dogadjaji</h2>
-            <div className="dogadjaji-container">
-              
-                {filtriraniDogadjaji22.map(dogadjaj => (
-                    <Kartica dogadjaj={dogadjaj}></Kartica>
-                    
-                ))}
-            </div>
-        </div>
-        </div>
+            <div style={{flexGrow: 1}}>
+                <input
+                    type="text"
+                    placeholder="Pretraži događaje"
+                    value={pretraga}
+                    onChange={handlePretragaChange}
+                    className="pretraga-input"
+                />
+                <h2>Naši Događaji</h2>     
+                <div className="paginacija">
+                    <button onClick={prvaStranica}><MdFirstPage /></button>
+                    <button onClick={prethodnaStranica}><MdNavigateBefore /></button>
+                    <span>Stranica {trenutnaStranica}</span>
+                    <button onClick={sledecaStranica}><MdNavigateNext /></button>
+                    <button onClick={poslednjaStranica}><MdLastPage /></button>
+                </div>  
+                <div className="dogadjaji-wrapper">
+                    {/* <div className="dogadjaji-container">
+                        {filtriraniDogadjaji.map(dogadjaj => (
+                            <DogadjajKartica key={dogadjaj.id} dogadjaj={dogadjaj} />
+                        ))}
+                    </div> */}
 
+                    <h2>Spoljni Događaji</h2>
+                    <div className="dogadjaji-container">
+                        {filtriraniDogadjaji22.map(dogadjaj => (
+                            <Kartica dogadjaj={dogadjaj}></Kartica>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 }
 
