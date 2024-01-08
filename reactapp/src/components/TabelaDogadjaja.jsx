@@ -4,7 +4,26 @@ import RedTabele from './RedTabele';
 import './TabelaDogadjaja.css';
 const TabelaDogadjaja = () => {
     const [dogadjaji, setDogadjaji] = useState([]);
+    const [prikaziModal, setPrikaziModal] = useState(false);
+    const [noviDogadjaj, setNoviDogadjaj] = useState({
+        naziv: '',
+        datumVreme: '',
+        mesto: '', 
+        organizator: '',
+        kapacitet: ''
+    });
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setNoviDogadjaj(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
 
+    const dodajDogadjaj = () => {
+        setDogadjaji(prevDogadjaji => [...prevDogadjaji, { ...noviDogadjaj, id: Date.now() }]);
+        setPrikaziModal(false); // Sakrij modal nakon dodavanja
+    };
     useEffect(() => {
         const fetchDogadjaji = async () => {
             try {
@@ -17,30 +36,69 @@ const TabelaDogadjaja = () => {
 
         fetchDogadjaji();
     }, []);
-    const obrisiDogadjaj = async (id) => {
-        try {
-            const token = localStorage.getItem('authToken');  
-            await axios.delete(`http://127.0.0.1:8000/api/dogadjaji/${id}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-            console.log(id)
-            setDogadjaji(prevDogadjaji => prevDogadjaji.filter(d => d.id !== id));
-        } catch (error) {
-            console.error('Došlo je do greške pri brisanju događaja', error);
-        }
+    const obrisiDogadjaj = (id) => {
+        setDogadjaji(prevDogadjaji => prevDogadjaji.filter(d => d.id !== id));
     };
     return (
         <>
-             
+              <button onClick={() => setPrikaziModal(true)}>Dodaj Novi Događaj</button>
+              {prikaziModal && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <span className="close" onClick={() => setPrikaziModal(false)}>&times;</span>
+                        <form onSubmit={e => { e.preventDefault(); dodajDogadjaj(); }}>
+                            <input
+                                type="text"
+                                name="naziv"
+                                value={noviDogadjaj.naziv}
+                                onChange={handleInputChange}
+                                placeholder="Naziv događaja"
+                                required
+                            />
+                            <input
+                                type="datetime-local"
+                                name="datumVreme"
+                                value={noviDogadjaj.datumVreme}
+                                onChange={handleInputChange}
+                                placeholder="Datum i vreme"
+                                required
+                            />
+                            <input
+                                type="text"
+                                name="mesto"
+                                value={noviDogadjaj.mesto}
+                                onChange={handleInputChange}
+                                placeholder="Mesto"
+                                required
+                            /> 
+                            <input
+                                type="text"
+                                name="organizator"
+                                value={noviDogadjaj.organizator}
+                                onChange={handleInputChange}
+                                placeholder="Organizator"
+                                required
+                            />
+                            <input
+                                type="number"
+                                name="kapacitet"
+                                value={noviDogadjaj.kapacitet}
+                                onChange={handleInputChange}
+                                placeholder="Kapacitet"
+                                min="1"
+                                required
+                            />
+                            <button type="submit">Sačuvaj Događaj</button>
+                        </form>
+                    </div>
+                </div>
+            )}
             <table>
             <thead>
                 <tr>
                     <th>Naziv</th>
                     <th>Datum i Vreme</th>
-                    <th>Mesto</th>
-                    <th>Tip</th>
+                    <th>Mesto</th> 
                     <th>Organizator</th>
                     <th>Kapacitet</th>
                     <th>Obrisi</th>

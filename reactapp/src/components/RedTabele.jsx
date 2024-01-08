@@ -5,8 +5,7 @@ const RedTabele = ({ dogadjaj, obrisiDogadjaj }) => {
         <tr>
             <td>{dogadjaj.naziv}</td>
             <td>{new Date(dogadjaj.datumVreme).toLocaleString()}</td>
-            <td>{dogadjaj.mesto}</td>
-            <td>{dogadjaj.tip.naziv}</td>
+            <td>{dogadjaj.mesto}</td> 
             <td>{dogadjaj.organizator}</td>
             <td>{dogadjaj.kapacitet}</td>
             <td>
