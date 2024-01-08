@@ -1,11 +1,11 @@
  
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css'; 
-import Dogadjaji from './components/Dogadjaji';
-import HomePage from './components/HomePage';
+import Dogadjaji from './components/Dogadjaji'; 
 import Navbar from './components/Navbar';
 import Register from './components/Register';
 import Login from './components/Login';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -13,11 +13,12 @@ function App() {
     <Router>
         <Navbar />
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<Login />} />
           <Route path="/dogadjaji" element={<Dogadjaji />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
+          
         </Routes>
+        <Footer />
       </Router>
     </div>
   );

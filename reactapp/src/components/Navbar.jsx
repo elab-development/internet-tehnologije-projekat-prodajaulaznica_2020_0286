@@ -9,7 +9,7 @@ const Navbar = () => {
         <nav className="navbar">
             <div className="nav-logo" onClick={() => navigate('/')}>Logo</div>
             <div className="nav-items">
-                <div onClick={() => navigate('/')}>Početna</div>
+              
                 <div onClick={() => navigate('/dogadjaji')}>Događaji</div>
                 <div onClick={() => navigate('/login')}>Uloguj se</div>
                 <div onClick={() => navigate('/register')}>Registruj se</div>
