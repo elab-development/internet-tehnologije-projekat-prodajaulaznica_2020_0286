@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
-const Login = () => {
+const Login = ({token,setToken}) => {
     const [credentials, setCredentials] = useState({
         email: '',
         password: '',
@@ -19,6 +19,7 @@ const Login = () => {
         try {
             const response = await axios.post('http://127.0.0.1:8000/api/login', credentials);
             localStorage.setItem('authToken', response.data.token);
+            setToken(response.data.token);
             navigate('/dogadjaji');  
         } catch (error) {
             console.error('Greška prilikom prijavljivanja', error.response.data);

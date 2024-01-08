@@ -15,10 +15,10 @@ const Footer = () => {
                 <div className="footer-section">
                     <h4>Mapa sajta</h4>
                     <ul className="footer-links">
-                        <li><Link to="/">Početna</Link></li>
+                        <li><Link to="/">Uloguj se</Link></li>
                         <li><Link to="/dogadjaji">Događaji</Link></li>
                         <li><Link to="/register">Registruj se</Link></li>
-                        <li><Link to="/login">Uloguj se</Link></li>
+                         
                     </ul>
                 </div>
             </div>

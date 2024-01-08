@@ -6,14 +6,16 @@ import Navbar from './components/Navbar';
 import Register from './components/Register';
 import Login from './components/Login';
 import Footer from './components/Footer';
+import { useState } from 'react';
 
 function App() {
+  const [token,setToken]= useState(null);
   return (
     <div className="App">
     <Router>
-        <Navbar />
+        <Navbar setToken={setToken} token={token}/>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<Login token={token} setToken={setToken}/>} />
           <Route path="/dogadjaji" element={<Dogadjaji />} />
           <Route path="/register" element={<Register />} />
           
