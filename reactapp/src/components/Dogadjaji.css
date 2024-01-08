@@ -5,3 +5,34 @@
     padding: 20px;
     background-color: #95A78D;  
 }
+
+
+.dogadjaji-wrapper {
+    padding: 20px;
+    margin: 0 40px;
+}
+
+ 
+
+.dogadjaj {
+    background-color: #C8C6AF;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.dogadjaj:hover {
+    transform: scale(1.03);
+}
+
+.dogadjaj img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+h2 {
+    color: #D7D0C8;
+    margin-bottom: 20px;
+}

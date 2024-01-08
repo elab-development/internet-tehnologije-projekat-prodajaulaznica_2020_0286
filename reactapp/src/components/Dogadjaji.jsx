@@ -28,7 +28,7 @@ const Dogadjaji = () => {
                 const response = await axios.get('https://app.ticketmaster.com/discovery/v2/events.json', {
                     params: {
                         apikey: 'rQaLInSZHng8AiA3h8qSt41RdHFKBmd3',
-                        size: 5,  
+                        size: 25,  
                         
                     }
                 });
@@ -46,19 +46,29 @@ const Dogadjaji = () => {
 
 
     return (
-        <div className="dogadjaji-container">
-            {dogadjaji.map(dogadjaj => (
-                <DogadjajKartica key={dogadjaj.id} dogadjaj={dogadjaj} />
-            ))}
-
-            {dogadjaji2.map(dogadjaj => (
-                <div key={dogadjaj.id} className="dogadjaj">
-                    <h3>{dogadjaj.name.text}</h3>
-                    <p>{dogadjaj.description.text}</p>
-                   
-                </div>
-            ))}
+        <div style={{backgroundColor:"#95A78D"}}> <h2>Nasi Dogadjaji</h2>        <div className="dogadjaji-wrapper">
+            <div className="dogadjaji-container">
+               
+                {dogadjaji.map(dogadjaj => (
+                    <DogadjajKartica key={dogadjaj.id} dogadjaj={dogadjaj} />
+                ))}
+            </div>
+            <h2>Spoljni Dogadjaji</h2>
+            <div className="dogadjaji-container">
+              
+                {dogadjaji2.map(dogadjaj => (
+                    <div key={dogadjaj.id} className="dogadjaj">
+                        <h3>{dogadjaj.name}</h3>
+                        <a href={dogadjaj.url} target="_blank" rel="noopener noreferrer">Više informacija</a>
+                        {dogadjaj.images && dogadjaj.images.length > 0 && (
+                            <img src={dogadjaj.images[0].url} alt={dogadjaj.name} />
+                        )}
+                    </div>
+                ))}
+            </div>
         </div>
+        </div>
+
     );
 }
 
