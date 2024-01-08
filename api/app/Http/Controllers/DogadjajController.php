@@ -16,8 +16,8 @@ class DogadjajController extends Controller
      */
     public function index()  //GET
     {
-        $dogadjaji = Dogadjaj::paginate(2);   
-
+       // $dogadjaji = Dogadjaj::paginate(2);   
+       $dogadjaji = Dogadjaj::all();   
         return DogadjajResource::collection($dogadjaji);
     }
 
