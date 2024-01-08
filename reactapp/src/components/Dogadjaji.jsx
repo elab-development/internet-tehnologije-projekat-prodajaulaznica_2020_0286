@@ -7,6 +7,8 @@ import Kartica from './Kartica';
 const Dogadjaji = () => {
     const [dogadjaji, setDogadjaji] = useState([]);
     const [dogadjaji2, setDogadjaji2] = useState([]);
+    const [izabranaKategorija, setIzabranaKategorija] = useState('');
+
 
     const [pretraga, setPretraga] = useState('');
     useEffect(() => { //izvlacimo dogadjaje iz nase baze
@@ -26,7 +28,9 @@ const Dogadjaji = () => {
     const handlePretragaChange = (e) => {
         setPretraga(e.target.value);
     };
-
+    const handleKategorijaChange = (e) => {
+        setIzabranaKategorija(e.target.value);
+    };
     const filtriraniDogadjaji = dogadjaji.filter(dogadjaj =>
         dogadjaj.naziv.toLowerCase().includes(pretraga.toLowerCase())
     );
@@ -34,7 +38,11 @@ const Dogadjaji = () => {
     const filtriraniDogadjaji2 = dogadjaji2.filter(dogadjaj =>
         dogadjaj.name.toLowerCase().includes(pretraga.toLowerCase())
     );
-    
+    const filtriraniDogadjaji22 = filtriraniDogadjaji2.filter(dogadjaj =>
+        izabranaKategorija === '' || (dogadjaj.classifications[0].segment.name === izabranaKategorija)
+    );
+ 
+  
     useEffect(() => {
         const fetchRandomEvents = async () => {
             try {
@@ -68,6 +76,33 @@ const Dogadjaji = () => {
                 onChange={handlePretragaChange}
                 className="pretraga-input"
             />
+             <div className="filteri">
+                <label>
+                    <input
+                        type="radio"
+                        value=""
+                        checked={izabranaKategorija === ''}
+                        onChange={handleKategorijaChange}
+                    /> Svi
+                </label>
+                <label>
+                    <input
+                        type="radio"
+                        value="Sports"
+                        checked={izabranaKategorija === 'Sports'}
+                        onChange={handleKategorijaChange}
+                    /> Sports
+                </label>
+                <label>
+                    <input
+                        type="radio"
+                        value="Music"
+                        checked={izabranaKategorija === 'Music'}
+                        onChange={handleKategorijaChange}
+                    /> Music
+                </label>
+               
+            </div>
         <h2>Nasi Dogadjaji</h2>       
         
          <div className="dogadjaji-wrapper">
@@ -80,7 +115,7 @@ const Dogadjaji = () => {
             <h2>Spoljni Dogadjaji</h2>
             <div className="dogadjaji-container">
               
-                {filtriraniDogadjaji2.map(dogadjaj => (
+                {filtriraniDogadjaji22.map(dogadjaj => (
                     <Kartica dogadjaj={dogadjaj}></Kartica>
                     
                 ))}

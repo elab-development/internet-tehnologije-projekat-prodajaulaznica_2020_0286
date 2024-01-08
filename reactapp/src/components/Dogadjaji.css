@@ -44,3 +44,12 @@ h2 {
     width: calc(100% - 40px);  
     box-sizing: border-box;
 }
+.filteri {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.filteri label {
+    margin-bottom: 10px;
+}
