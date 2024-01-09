@@ -24,19 +24,7 @@ const TabelaDogadjaja = () => {
     const dodajDogadjaj = () => {
         setDogadjaji(prevDogadjaji => [...prevDogadjaji, { ...noviDogadjaj, id: Date.now() }]);
         setPrikaziModal(false); // Sakrij modal nakon dodavanja
-    };
-    useEffect(() => {
-        const fetchDogadjaji = async () => {
-            try {
-                const response = await axios.get('http://127.0.0.1:8000/api/dogadjaji');
-                setDogadjaji(response.data.data);
-            } catch (error) {
-                console.error('Došlo je do greške pri dobavljanju događaja', error);
-            }
-        };
-
-        fetchDogadjaji();
-    }, []);
+    }; 
     const obrisiDogadjaj = (id) => {
         setDogadjaji(prevDogadjaji => prevDogadjaji.filter(d => d.id !== id));
     };

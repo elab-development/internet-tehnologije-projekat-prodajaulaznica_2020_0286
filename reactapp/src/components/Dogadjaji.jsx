@@ -56,6 +56,7 @@ const Dogadjaji = () => {
                     }
                 });
                 setDogadjaji2(response.data._embedded.events);
+                console.log(response.data._embedded.events)
             } catch (error) {
                 console.error('Došlo je do greške prilikom dobavljanja događaja', error);
             }
@@ -111,8 +112,8 @@ const Dogadjaji = () => {
                 <label>
                     <input
                         type="radio"
-                        value="Music"
-                        checked={izabranaKategorija === 'Music'}
+                        value="Miscellaneous"
+                        checked={izabranaKategorija === 'Miscellaneous'}
                         onChange={handleKategorijaChange}
                     /> Miscellaneous
                 </label>
@@ -134,11 +135,11 @@ const Dogadjaji = () => {
                     <button onClick={poslednjaStranica}><MdLastPage /></button>
                 </div>  
                 <div className="dogadjaji-wrapper">
-                    {/* <div className="dogadjaji-container">
+                     {/* <div className="dogadjaji-container">
                         {filtriraniDogadjaji.map(dogadjaj => (
                             <DogadjajKartica key={dogadjaj.id} dogadjaj={dogadjaj} />
                         ))}
-                    </div> */}
+                    </div>   */}
 
                     <h2>Spoljni Događaji</h2>
                     <div className="dogadjaji-container">

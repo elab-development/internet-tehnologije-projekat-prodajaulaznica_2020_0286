@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
-const Login = ({token,setToken}) => {
+const Login = ({setToken}) => {
     const [credentials, setCredentials] = useState({
         email: '',
         password: '',
@@ -12,6 +12,7 @@ const Login = ({token,setToken}) => {
 
     const handleChange = (e) => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value });
+        console.log(credentials)
     };
 
     const handleSubmit = async (e) => {

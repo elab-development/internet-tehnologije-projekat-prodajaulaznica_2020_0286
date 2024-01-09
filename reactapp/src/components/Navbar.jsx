@@ -34,7 +34,7 @@ const Navbar = ({token,setToken}) => {
                  {/* samo ulogovani korisnici mogu da rade crud operacije nad dogadjajima iz nase baze */}
                 {!token && <div onClick={() => navigate('/')}>Uloguj se</div>}   
                 {!token &&  <div onClick={() => navigate('/register')}>Registruj se</div>}
-                {!token &&  <div onClick={() => navigate('/admin')}>Admin</div>}
+                {token &&  <div onClick={() => navigate('/admin')}>Admin</div>}
                 {token && <div onClick={handleLogout}>Logout</div>}  
             </div>
         </nav>

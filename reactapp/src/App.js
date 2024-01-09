@@ -10,15 +10,19 @@ import { useState } from 'react';
 import TabelaDogadjaja from './components/TabelaDogadjaja';
 
 function App() {
+  
   const [token,setToken]= useState(null);
+
+
   return (
     <div className="App">
     <Router>
         <Navbar setToken={setToken} token={token}/>
         <Routes>
-          <Route path="/" element={<Login token={token} setToken={setToken}/>} />
+          <Route path="/" element={<Login  setToken={setToken}/>} />
           <Route path="/dogadjaji" element={<Dogadjaji />} />
           <Route path="/register" element={<Register />} />
+          
           <Route path="/admin" element={<TabelaDogadjaja />} />
         </Routes>
         <Footer />

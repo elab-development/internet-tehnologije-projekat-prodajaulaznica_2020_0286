@@ -12,6 +12,7 @@ const useDogadjaji = (initialUrl) => {
             try {
                 setLoading(true);
                 const response = await axios.get(initialUrl);
+                
                 if (!ignore) setDogadjaji(response.data.data);
             } catch (err) {
                 if (!ignore) setError(err);
