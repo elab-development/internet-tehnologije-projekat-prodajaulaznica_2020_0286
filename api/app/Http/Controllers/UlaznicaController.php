@@ -17,8 +17,8 @@ class UlaznicaController extends Controller
      */
     public function index()
     {
-        $ulaznice = Ulaznica::all();
-        return UlaznicaResource::collection($ulaznice::paginate(2));
+        $ulaznice = Ulaznica::paginate(2);
+        return UlaznicaResource::collection($ulaznice);
     }
 
     /**
