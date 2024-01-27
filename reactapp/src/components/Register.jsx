@@ -8,7 +8,8 @@ const Register = () => {
         name: '',
         email: '',
         password: '',
-        kontakt: ''
+        kontakt: '',
+     
     });
     const navigate = useNavigate();
 
@@ -20,7 +21,7 @@ const Register = () => {
         e.preventDefault();
         try {
             await axios.post('http://127.0.0.1:8000/api/register', formData);
-            navigate('/login');
+            navigate('/');
         } catch (error) {
             console.error('Greška prilikom registracije', error.response.data);
         }

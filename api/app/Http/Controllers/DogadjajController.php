@@ -118,7 +118,7 @@ class DogadjajController extends Controller
             'mesto' => 'required|string',
             'tip' => 'required|exists:tip_dogodjajas,id',  
             'organizator' => 'required|string',
-            'slika' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',  
+       //     'slika' => 'image|mimes:jpeg,png,jpg,gif|max:2048',  
             'kapacitet' => 'required|integer|min:1',
         ]);
         if ($validator->fails()) {
