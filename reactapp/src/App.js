@@ -8,6 +8,7 @@ import Login from './components/Login';
 import Footer from './components/Footer';
 import { useState } from 'react';
 import TabelaDogadjaja from './components/TabelaDogadjaja';
+import NotFoundPage from './components/NotFoundPage';
 
 function App() {
   
@@ -24,6 +25,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           
           <Route path="/admin" element={<TabelaDogadjaja />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
         <Footer />
       </Router>
