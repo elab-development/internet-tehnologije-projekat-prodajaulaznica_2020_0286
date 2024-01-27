@@ -126,7 +126,7 @@ const Dogadjaji = () => {
                     onChange={handlePretragaChange}
                     className="pretraga-input"
                 />
-                <h2>Naši Događaji</h2>     
+              
                 <div className="paginacija">
                     <button onClick={prvaStranica}><MdFirstPage /></button>
                     <button onClick={prethodnaStranica}><MdNavigateBefore /></button>

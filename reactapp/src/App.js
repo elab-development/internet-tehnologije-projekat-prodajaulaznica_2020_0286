@@ -9,6 +9,7 @@ import Footer from './components/Footer';
 import { useState } from 'react';
 import TabelaDogadjaja from './components/TabelaDogadjaja';
 import NotFoundPage from './components/NotFoundPage';
+import KupiUlaznice from './components/KupiUlaznice';
 
 function App() {
   
@@ -23,7 +24,7 @@ function App() {
           <Route path="/" element={<Login  setToken={setToken}/>} />
           <Route path="/dogadjaji" element={<Dogadjaji />} />
           <Route path="/register" element={<Register />} />
-          
+          <Route path="/kupiUlaznicu" element={<KupiUlaznice />} />
           <Route path="/admin" element={<TabelaDogadjaja />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
