@@ -50,12 +50,7 @@ class DogadjajController extends Controller
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 400);
-        }
-      
-
-
-
-
+        }  
         $dogadjaj = Dogadjaj::create([
             'naziv' => $request->input('naziv'),
             'datumVreme' => $request->input('datumVreme'),

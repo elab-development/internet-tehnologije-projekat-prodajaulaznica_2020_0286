@@ -3,6 +3,7 @@ import axios from 'axios';
 import RedTabele from './RedTabele';
 import './TabelaDogadjaja.css';
 import useDogadjaji from './useDogadjaji';
+import UnauthorizedPage from './UnauthorizedPage ';
 
 const TabelaDogadjaja = () => {
     const { dogadjaji, loading, error, setDogadjaji } = useDogadjaji('http://127.0.0.1:8000/api/dogadjaji');
@@ -74,10 +75,15 @@ const TabelaDogadjaja = () => {
     const obrisiDogadjaj = (id) => {
         setDogadjaji(prevDogadjaji => prevDogadjaji.filter(d => d.id !== id));
     };
+    const userRole = sessionStorage.getItem('userRole');
 
+    // Proveri ulogu i prikaži poruku ako je korisnik ili nema uloge
+    if (userRole === 'korisnik' || !userRole) {
+        return <UnauthorizedPage></UnauthorizedPage>;
+    }
     if (loading) return <p>Učitavanje događaja...</p>;
     if (error) return <p>Došlo je do greške: {error.message}</p>;
-
+ 
     return (
         <>
             <button onClick={openModalForAdd}>Dodaj Novi Događaj</button>

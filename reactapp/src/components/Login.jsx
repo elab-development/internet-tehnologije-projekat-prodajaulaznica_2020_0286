@@ -20,8 +20,19 @@ const Login = ({setToken}) => {
         try {
             const response = await axios.post('http://127.0.0.1:8000/api/login', credentials);
             localStorage.setItem('authToken', response.data.token);
+            localStorage.setItem('uloga', response.data.user.uloga);
             setToken(response.data.token);
-            navigate('/admin');  
+            console.log(response.data.user)
+            const uloga = response.data.user.uloga;
+
+            if (uloga === 'admin') {
+                navigate('/admin');
+            } else if (uloga === 'korisnik') {
+                navigate('/dogadjaji');
+            } else {
+               
+            }
+
         } catch (error) {
             console.error('Greška prilikom prijavljivanja', error.response.data);
         }
