@@ -3,7 +3,7 @@ import React from 'react';
 import './DogadjajKartica.css';
 import image1 from './images/1.jpg';
 // {dogadjaj.slika}
-const DogadjajKartica = ({ dogadjaj }) => {
+const DogadjajKartica = ({ dogadjaj,onKupiClick}) => {
     return (
         <div className="dogadjaj-kartica">
             <div className="dogadjaj-slika-container">
@@ -16,6 +16,7 @@ const DogadjajKartica = ({ dogadjaj }) => {
                 <p>Mesto: {dogadjaj.mesto}</p>
                 <p>Organizator: {dogadjaj.organizator}</p>
                 <p>Kapacitet: {dogadjaj.kapacitet}</p>
+                <button onClick={()=>onKupiClick}>Kupi ulaznice</button>
             </div>
         </div>
     );
