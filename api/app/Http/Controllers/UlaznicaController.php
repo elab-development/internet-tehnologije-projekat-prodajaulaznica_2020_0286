@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\UlaznicaResource;
+use App\Models\Dogadjaj;
 use App\Models\TipUlaznice;
 use App\Models\Ulaznica;
 use Illuminate\Http\Request;
@@ -40,6 +41,13 @@ class UlaznicaController extends Controller
      */
     public function store(Request $request)
     {
+
+
+
+
+
+
+
         $validator = Validator::make($request->all(), [
             'dogadjaj' => 'required|exists:dogadjajs,id',
             'tip' => 'required|exists:tip_ulaznices,id',
@@ -51,7 +59,20 @@ class UlaznicaController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 400);
         }
-    
+        $dogadjaj = Dogadjaj::find($request->input('dogadjaj'));
+
+        if (!$dogadjaj) {
+            return response()->json(['message' => 'Dogadjaj nije pronadjen'], 404);
+        }
+
+        // Provera kapaciteta i broja prodanih ulaznica
+        $kapacitet = $dogadjaj->kapacitet;
+        $brojProdanihUlaznica = Ulaznica::where('dogadjaj', $dogadjaj->id)->sum('kolicina');
+
+        if ($request->input('kolicina') + $brojProdanihUlaznica > $kapacitet) {
+            return response()->json(['message' => 'Nema dovoljno karata za ovaj dogadjaj'], 400);
+        }
+ 
         $user = Auth::user(); // Dobijanje ulogovanog korisnika
         $ulaznica = Ulaznica::create([
             'dogadjaj' => $request->input('dogadjaj'),

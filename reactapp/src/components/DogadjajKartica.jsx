@@ -16,6 +16,7 @@ const DogadjajKartica = ({ dogadjaj,onKupiClick}) => {
                 <p>Mesto: {dogadjaj.mesto}</p>
                 <p>Organizator: {dogadjaj.organizator}</p>
                 <p>Kapacitet: {dogadjaj.kapacitet}</p>
+                <p>ostalo jos: {dogadjaj.br_mesta} slobodnih mesta</p>
                 <button onClick={()=>onKupiClick(dogadjaj)}>Kupi ulaznice</button>
             </div>
         </div>

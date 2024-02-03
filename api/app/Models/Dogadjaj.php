@@ -24,5 +24,11 @@ class Dogadjaj extends Model
     {
         return $this->belongsTo(TipDogodjaja::class);
     }
+    public function brojProdatihKarata()  //fja potrebna  da bismo mogli na frontu da prikazemo koliko je jos karata ostalo za prodaju
+    {
+        return Ulaznica::where('dogadjaj', $this->id)->sum('kolicina');
+    }
+
+
 
 }

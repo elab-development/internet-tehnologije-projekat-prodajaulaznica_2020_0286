@@ -29,6 +29,7 @@ class DogadjajResource extends JsonResource
             'slika' => $this->slika,
             'kapacitet' => $this->kapacitet,
             'cena' => $this->cena,
+            'br_mesta' => $this->kapacitet - $this->brojProdatihKarata(), 
         ];
     }
 }

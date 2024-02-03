@@ -96,6 +96,7 @@ const Modal = ({ dogadjaj, onClose }) => {
             onClose();  
         } catch (error) {
             console.error('Error creating ticket', error);
+            alert('Došlo je do greške pri kreiranju ulaznice. Poruka o grešci: ' + error.response.data.message);
         }
     };
 
