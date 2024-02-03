@@ -152,13 +152,14 @@ const TabelaDogadjaja = () => {
                     <tr>
                         <th>Naziv</th>
                         <th>Datum i Vreme</th>
-                        <th>Mesto</th>
-                        <th>Organizator</th>
-                        <th>Kapacitet</th>
-                        <th>Br. neprodatih karata</th>
+                        {/* <th>Mesto</th>
+                        <th>Organizator</th> */}
+                        {/* <th>Kapacitet</th>
+                        <th>Br. neprodatih karata</th> */}
                         <th>Popunjenost</th>
                         <th>Obrisi</th>
                         <th>Ažuriraj</th>
+                        <th>Detalji</th>
                     </tr>
                 </thead>
                 <tbody>

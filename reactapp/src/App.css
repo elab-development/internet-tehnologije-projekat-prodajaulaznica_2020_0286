@@ -36,3 +36,41 @@
     transform: rotate(360deg);
   }
 }
+
+
+
+.detalji-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #C8C6AF;
+  border: 1px solid #BD897E;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 5%;
+}
+
+.detalji-container h1 {
+  font-size: 1.5rem;
+  color: #504e4c;
+  margin-bottom: 10px;
+}
+
+.detalji-container p {
+  font-size: 1rem;
+  color: #504e4c;
+  margin-bottom: 10px;
+}
+
+.detalji-container p:last-child {
+  margin-bottom: 0;
+}
+
+.detalji-container a {
+  color: #BD897E;
+  text-decoration: none;
+}
+
+.detalji-container a:hover {
+  color: #F87666;
+}

@@ -28,7 +28,10 @@ class Dogadjaj extends Model
     {
         return Ulaznica::where('dogadjaj', $this->id)->sum('kolicina');
     }
-
+    public function ulaznice()
+    {
+        return $this->hasMany(Ulaznica::class);
+    }
 
 
 }
