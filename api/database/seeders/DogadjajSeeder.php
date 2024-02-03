@@ -22,7 +22,8 @@ class DogadjajSeeder extends Seeder
                 'tip' => 3,  
                 'organizator' => 'NYRR',
                 'slika' => 'images/ny-marathon.jpg',
-                'kapacitet' => 50000
+                'kapacitet' => 50000,
+                    'cena'=>800,
             ],
             [
                 'naziv' => 'Comic-Con International',
@@ -31,7 +32,8 @@ class DogadjajSeeder extends Seeder
                 'tip' => 4,  
                 'organizator' => 'San Diego Comic Convention',
                 'slika' => 'images/comic-con.jpg',
-                'kapacitet' => 130000
+                'kapacitet' => 130000,
+                'cena'=>1800,
             ],
             [
                 'naziv' => 'Glastonbury Festival',
@@ -40,7 +42,8 @@ class DogadjajSeeder extends Seeder
                 'tip' => 5, 
                 'organizator' => 'Glastonbury Festivals Ltd.',
                 'slika' => 'images/glastonbury-festival.jpg',
-                'kapacitet' => 135000
+                'kapacitet' => 135000,
+                'cena'=>500,
             ],
             [
                 'naziv' => 'La Traviata at The Metropolitan Opera',
@@ -49,7 +52,8 @@ class DogadjajSeeder extends Seeder
                 'tip' => 2,  
                 'organizator' => 'The Metropolitan Opera',
                 'slika' => 'images/la-traviata.jpg',
-                'kapacitet' => 3800
+                'kapacitet' => 3800,
+                'cena'=>1000,
             ]
         ];
         foreach ($dogadjaji as $dogadjaj) {

@@ -47,6 +47,7 @@ class DogadjajController extends Controller
             'organizator' => 'required|string',
             'slika' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',  
             'kapacitet' => 'required|integer|min:1',
+            'cena'=>'required|integer|min:1',
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 400);
@@ -58,6 +59,7 @@ class DogadjajController extends Controller
             'tip' => $request->input('tip'),
             'organizator' => $request->input('organizator'),
             'kapacitet' => $request->input('kapacitet'),
+            'cena' => $request->input('cena'),
         ]);
         if ($request->hasFile('slika')) {
             $slika = $request->file('slika');
@@ -68,8 +70,7 @@ class DogadjajController extends Controller
         return response()->json([
             'message' => 'Uspesno kreiran dogadjaj',
             'dogadjaj' => new DogadjajResource($dogadjaj)
-        ], 200);
-
+        ], 200); 
     }
 
     /**
@@ -115,6 +116,7 @@ class DogadjajController extends Controller
             'organizator' => 'required|string',
        //     'slika' => 'image|mimes:jpeg,png,jpg,gif|max:2048',  
             'kapacitet' => 'required|integer|min:1',
+            'cena' => $request->input('cena'),
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 400);
@@ -128,6 +130,7 @@ class DogadjajController extends Controller
                 'tip' => $request->input('tip'),
                 'organizator' => $request->input('organizator'),
                 'kapacitet' => $request->input('kapacitet'),
+                'cena' => $request->input('cena'),
             ]);
             if ($request->hasFile('slika')) {
                 $slika = $request->file('slika');

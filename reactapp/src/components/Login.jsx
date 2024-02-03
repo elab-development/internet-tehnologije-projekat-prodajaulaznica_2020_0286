@@ -5,8 +5,8 @@ import './Login.css';
 
 const Login = ({setToken}) => {
     const [credentials, setCredentials] = useState({
-        email: '',
-        password: '',
+        email: 'pera@gmail.com',
+        password: 'pera',
     });
     const navigate = useNavigate();
 

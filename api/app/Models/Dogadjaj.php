@@ -16,7 +16,8 @@ class Dogadjaj extends Model
         'tip',
         'organizator',
         'slika',
-        'kapacitet' 
+        'kapacitet' ,
+        'cena'  //za svaki dogadjaj cemo kao pamtiti neku standardnu cenu, npr 100 din jedna karta, kada neko odabere tip ulaznice, na osnovu tipa ulaznice ce se menjati cena za kartu, npr ako je neko odabrao VIP ulaznicu, onda cena nece biti 100, nego 200 (npr duplo visa), ako je studentska karta onda npr 80 dinara (20% niza) itd
     ];
 
     public function tip()

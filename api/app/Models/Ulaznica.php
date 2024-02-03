@@ -13,7 +13,9 @@ class Ulaznica extends Model
         'korisnik',
         'tip' ,
         'datumKupovine',
-        'cena',
+        'kolicina', //dodato je ovo polje kako bi jedan korisnik mogao da kupi npr 6 karata za jedan dogadjaj
+        'cena', //ovaj podatak cemo izracunavati na osnovu broja kupljenih karata i tipa ulaznice i cene dogadjaja
+
 
     ];
     public function tip()

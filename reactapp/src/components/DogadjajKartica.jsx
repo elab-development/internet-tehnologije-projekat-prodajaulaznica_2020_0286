@@ -16,7 +16,7 @@ const DogadjajKartica = ({ dogadjaj,onKupiClick}) => {
                 <p>Mesto: {dogadjaj.mesto}</p>
                 <p>Organizator: {dogadjaj.organizator}</p>
                 <p>Kapacitet: {dogadjaj.kapacitet}</p>
-                <button onClick={()=>onKupiClick}>Kupi ulaznice</button>
+                <button onClick={()=>onKupiClick(dogadjaj)}>Kupi ulaznice</button>
             </div>
         </div>
     );

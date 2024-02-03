@@ -10,6 +10,7 @@ const Navbar = ({token, setToken}) => {
     useEffect(() => {
         const storedUserRole = localStorage.getItem('uloga');
         setUserRole(storedUserRole);
+        console.log(storedUserRole)
     }, []);
 
     useEffect(() => {
@@ -42,13 +43,13 @@ const Navbar = ({token, setToken}) => {
                 <>
                     <div onClick={() => navigate('/dogadjaji')}>Događaji</div>
                     {userRole === 'admin' && <div onClick={() => navigate('/admin')}>Admin</div>}
-                    {userRole === 'korisnik' && <div onClick={() => navigate('/kupiUlaznicu')}>Kupi ulaznicu</div>}
+                    {localStorage.getItem('uloga') === 'korisnik' && <div onClick={() => navigate('/kupiUlaznicu')}>Kupi ulaznicu</div>}
                     <div onClick={handleLogout}>Logout</div>
                 </>
             ) : (
                 <>
                     <div onClick={() => navigate('/register')}>Registracija</div>
-                    <div onClick={() => navigate('/login')}>Login</div>
+                    <div onClick={() => navigate('/')}>Login</div>
                 </>
             )}
         </div>

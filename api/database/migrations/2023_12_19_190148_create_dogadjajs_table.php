@@ -22,6 +22,7 @@ class CreateDogadjajsTable extends Migration
             $table->string('organizator');  
             $table->text('slika')->nullable(); //"images/koncetr1.jpg"
             $table->integer('kapacitet');
+            $table->integer('cena')->default(1000);
             $table->timestamps(); 
              
         });

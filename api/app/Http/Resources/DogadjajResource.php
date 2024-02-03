@@ -28,6 +28,7 @@ class DogadjajResource extends JsonResource
             'organizator' => $this->organizator,
             'slika' => $this->slika,
             'kapacitet' => $this->kapacitet,
+            'cena' => $this->cena,
         ];
     }
 }

@@ -15,12 +15,9 @@ class CreateUlaznicasTable extends Migration
     {
         Schema::create('ulaznicas', function (Blueprint $table) {
             $table->id();
-           
-
             $table->dateTime('datumKupovine');
+            $table->integer('kolicina')->default(1);
             $table->decimal('cena', 8, 2);
-
-
             $table->timestamps();
 
             

@@ -6,6 +6,7 @@ use App\Http\Resources\UlaznicaResource;
 use App\Models\TipUlaznice;
 use App\Models\Ulaznica;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class UlaznicaController extends Controller
@@ -41,22 +42,24 @@ class UlaznicaController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'dogadjaj' => 'required|exists:dogadjajs,id',
-            'korisnik' => 'required|exists:users,id',
             'tip' => 'required|exists:tip_ulaznices,id',
             'datumKupovine' => 'required|date',
-            'cena' => 'required|numeric|min:1',
+            'cena' => 'required|numeric|min:1', 
+            'kolicina' => 'required|numeric|min:1',
         ]);
     
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 400);
         }
     
+        $user = Auth::user(); // Dobijanje ulogovanog korisnika
         $ulaznica = Ulaznica::create([
             'dogadjaj' => $request->input('dogadjaj'),
-            'korisnik' => $request->input('korisnik'),
+            'korisnik' => $user->id, // Postavljanje ID-a ulogovanog korisnika
             'tip' => $request->input('tip'),
             'datumKupovine' => $request->input('datumKupovine'),
             'cena' => $request->input('cena'),
+            'kolicina' => $request->input('kolicina'),
         ]);
     
         return response()->json([

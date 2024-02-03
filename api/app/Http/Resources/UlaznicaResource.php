@@ -30,6 +30,7 @@ class UlaznicaResource extends JsonResource
             ],
             'datumKupovine' => $this->datumKupovine,
             'cena' => $this->cena,
+            'kolicina' => $this->kolicina,
         ];
     }
 }

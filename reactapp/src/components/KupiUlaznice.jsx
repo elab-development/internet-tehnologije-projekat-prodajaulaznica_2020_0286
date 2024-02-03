@@ -7,10 +7,11 @@ import Modal from './Modal';
 const KupiUlaznice = () => {
     const { dogadjaji, loading, error } = useDogadjaji('http://127.0.0.1:8000/api/dogadjaji');
     const [selectedDogadjaj, setSelectedDogadjaj] = useState(null);
-    const handleKupiClick = (id) => {
-        setSelectedDogadjaj(id);
-        console.log(id)
-        localStorage.setItem("dogadjaj_id",id);
+    const handleKupiClick = (dogadjaj) => {
+        setSelectedDogadjaj(dogadjaj.id);
+        console.log(dogadjaj.id)
+        localStorage.setItem("dogadjaj_id",dogadjaj.id);
+        localStorage.setItem("dogadjaj_cena",dogadjaj.cena);
     };
     if (loading) return <p>Učitavanje događaja...</p>;
     if (error) return <p>Došlo je do greške: {error.message}</p>;

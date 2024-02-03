@@ -27,7 +27,8 @@ class UlaznicaSeeder extends Seeder
             'korisnik' => $korisnik->id,
             'tip' => $tipUlaznice->id,
             'datumKupovine' => now()->subDays(rand(1, 30)),
-            'cena' => rand(100, 500)
+            'cena' => rand(100, 500),
+            'kolicina' => rand(1, 5)
         ]);
 
     }
