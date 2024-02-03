@@ -16,6 +16,15 @@ class DogadjajResource extends JsonResource
     public function toArray($request)
     {
          $tip  = TipDogodjaja::find($this->tip);
+
+         // Dodaj statistiku za svaki tip ulaznica
+        $statistikaUlaznica = [
+            'Standard' => $this->brojKupljenihUlaznica(1),
+            'VIP' => $this->brojKupljenihUlaznica(2),
+            'Premium' => $this->brojKupljenihUlaznica(3),
+            'Group' => $this->brojKupljenihUlaznica(4),
+            'Student' => $this->brojKupljenihUlaznica(5),
+        ];
         return [
             'id' => $this->id,
             'naziv' => $this->naziv,
@@ -30,6 +39,8 @@ class DogadjajResource extends JsonResource
             'kapacitet' => $this->kapacitet,
             'cena' => $this->cena,
             'br_mesta' => $this->kapacitet - $this->brojProdatihKarata(), 
+            'statistika_ulaznica' => $statistikaUlaznica,
+             
         ];
     }
 }
