@@ -1,6 +1,7 @@
 import React from 'react';
 
 const RedTabele = ({ dogadjaj, obrisiDogadjaj, openModalForUpdate }) => {
+    const popunjenost = (dogadjaj.kapacitet - dogadjaj.br_mesta) / dogadjaj.kapacitet * 100;
     return (
         <tr>
             <td>{dogadjaj.naziv}</td>
@@ -8,6 +9,8 @@ const RedTabele = ({ dogadjaj, obrisiDogadjaj, openModalForUpdate }) => {
             <td>{dogadjaj.mesto}</td> 
             <td>{dogadjaj.organizator}</td>
             <td>{dogadjaj.kapacitet}</td>
+            <td>{dogadjaj.br_mesta}</td>
+            <td>{popunjenost.toFixed(2)}%</td>
             <td>
                 <button onClick={() => obrisiDogadjaj(dogadjaj.id)}>Obriši</button>
             </td>

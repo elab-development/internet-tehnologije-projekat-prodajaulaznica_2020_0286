@@ -116,7 +116,7 @@ class DogadjajController extends Controller
             'organizator' => 'required|string',
        //     'slika' => 'image|mimes:jpeg,png,jpg,gif|max:2048',  
             'kapacitet' => 'required|integer|min:1',
-            'cena' => $request->input('cena'),
+            'cena'=>'required|integer|min:1',
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 400);

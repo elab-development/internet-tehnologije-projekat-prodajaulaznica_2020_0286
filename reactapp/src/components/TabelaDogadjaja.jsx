@@ -6,18 +6,48 @@ import useDogadjaji from './useDogadjaji';
 import UnauthorizedPage from './UnauthorizedPage ';
 
 const TabelaDogadjaja = () => {
-    const { dogadjaji, loading, error, setDogadjaji } = useDogadjaji('http://127.0.0.1:8000/api/dogadjaji');
+    const { dogadjaji, loading, error,setDogadjaji} = useDogadjaji('http://127.0.0.1:8000/api/dogadjaji');
     const [prikaziModal, setPrikaziModal] = useState(false);
     const [isUpdating, setIsUpdating] = useState(false);
+    const [pretragaKriterijum, setPretragaKriterijum] = useState("");
+    const [sortDirection, setSortDirection] = useState("");
     const [noviDogadjaj, setNoviDogadjaj] = useState({
         naziv: '',
         datumVreme: '',
-        mesto: '', 
+        mesto: '',
         organizator: '',
         kapacitet: '',
-        tip:6 //ostalo
+        cena: '',
+        tip: 6 // Ostalo
     });
 
+
+    const handlePretragaInputChange = (e) => {
+        setPretragaKriterijum(e.target.value);
+    };
+
+    const filtriraniDogadjaji = dogadjaji.filter(dogadjaj =>
+        dogadjaj.naziv.toLowerCase().includes(pretragaKriterijum.toLowerCase()) ||
+        dogadjaj.mesto.toLowerCase().includes(pretragaKriterijum.toLowerCase()) ||
+        dogadjaj.organizator.toLowerCase().includes(pretragaKriterijum.toLowerCase())
+        
+    );
+    const sortirajDogadjaje = (direction) => {
+        setSortDirection(direction);
+        setDogadjaji(prevDogadjaji => {
+            return [...prevDogadjaji].sort((a, b) => {
+                
+                const popunjenostA = (a.br_mesta / a.kapacitet) || 0;
+                const popunjenostB = (b.br_mesta / b.kapacitet) || 0;
+
+                if (direction === "rastuce") {
+                    return popunjenostA - popunjenostB;
+                } else if (direction === "opadajuce") {
+                    return popunjenostB - popunjenostA;
+                }
+            });
+        });
+    };
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setNoviDogadjaj(prevState => ({
@@ -71,11 +101,11 @@ const TabelaDogadjaja = () => {
         }
     };
     
-
+ 
     const obrisiDogadjaj = (id) => {
         setDogadjaji(prevDogadjaji => prevDogadjaji.filter(d => d.id !== id));
     };
-    const userRole = sessionStorage.getItem('userRole');
+    const userRole = localStorage.getItem('uloga');
 
     // Proveri ulogu i prikaži poruku ako je korisnik ili nema uloge
     if (userRole === 'korisnik' || !userRole) {
@@ -97,12 +127,26 @@ const TabelaDogadjaja = () => {
                             <input type="text" name="mesto" value={noviDogadjaj.mesto} onChange={handleInputChange} placeholder="Mesto" required /> 
                             <input type="text" name="organizator" value={noviDogadjaj.organizator} onChange={handleInputChange} placeholder="Organizator" required />
                             <input type="number" name="kapacitet" value={noviDogadjaj.kapacitet} onChange={handleInputChange} placeholder="Kapacitet" min="1" required />
+                            <input type="number" name="cena" value={noviDogadjaj.cena} onChange={handleInputChange} placeholder="Osnovna cena" min="1" required />
                            
                             <button type="submit">{isUpdating ? 'Ažuriraj Događaj' : 'Sačuvaj Događaj'}</button>
                         </form>
                     </div>
                 </div>
             )}
+            <div className="pretraga">
+                <input
+                    type="text"
+                    placeholder="Unesite kriterijum za pretragu"
+                    value={pretragaKriterijum}
+                    onChange={handlePretragaInputChange}
+                />
+              
+            </div>
+            <div className="sortiranje">
+                <button onClick={() => sortirajDogadjaje('rastuce')}>Sortiraj Rastuće</button>
+                <button onClick={() => sortirajDogadjaje('opadajuce')}>Sortiraj Opadajuće</button>
+            </div>
             <table>
                 <thead>
                     <tr>
@@ -111,12 +155,14 @@ const TabelaDogadjaja = () => {
                         <th>Mesto</th>
                         <th>Organizator</th>
                         <th>Kapacitet</th>
+                        <th>Br. neprodatih karata</th>
+                        <th>Popunjenost</th>
                         <th>Obrisi</th>
                         <th>Ažuriraj</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {dogadjaji.map(dogadjaj => (
+                    {filtriraniDogadjaji.map(dogadjaj => (
                         <RedTabele key={dogadjaj.id} dogadjaj={dogadjaj} obrisiDogadjaj={obrisiDogadjaj} openModalForUpdate={() => openModalForUpdate(dogadjaj)} />
                     ))}
                 </tbody>
