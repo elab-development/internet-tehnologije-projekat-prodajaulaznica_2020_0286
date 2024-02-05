@@ -6,6 +6,8 @@ use App\Http\Resources\UlaznicaResource;
 use App\Models\Dogadjaj;
 use App\Models\TipUlaznice;
 use App\Models\Ulaznica;
+use Carbon\Carbon;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -39,15 +41,8 @@ class UlaznicaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-
-
-
-
-
-
-
+    public function store(Request $request)  //ovo je metoda koja ce nam sluziti za kreiranje rezervacije za ulaznice, tj dodavanja ulaznica u red cekanja
+    { 
         $validator = Validator::make($request->all(), [
             'dogadjaj' => 'required|exists:dogadjajs,id',
             'tip' => 'required|exists:tip_ulaznices,id',
@@ -72,7 +67,7 @@ class UlaznicaController extends Controller
         if ($request->input('kolicina') + $brojProdanihUlaznica > $kapacitet) {
             return response()->json(['message' => 'Nema dovoljno karata za ovaj dogadjaj'], 400);
         }
- 
+        $rezervisano_do = Carbon::now()->addHour();
         $user = Auth::user(); // Dobijanje ulogovanog korisnika
         $ulaznica = Ulaznica::create([
             'dogadjaj' => $request->input('dogadjaj'),
@@ -81,14 +76,17 @@ class UlaznicaController extends Controller
             'datumKupovine' => $request->input('datumKupovine'),
             'cena' => $request->input('cena'),
             'kolicina' => $request->input('kolicina'),
+            'rezervisano_do' => $rezervisano_do,
         ]);
     
         return response()->json([
-            'message' => 'Ulaznica uspešno kreirana',
+            'message' => 'Ulaznice uspešno rezervisane',
             'ulaznica' => new UlaznicaResource($ulaznica),
         ], 201);
     }
+  
 
+    
     /**
      * Display the specified resource.
      *

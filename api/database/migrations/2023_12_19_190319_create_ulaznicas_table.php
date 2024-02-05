@@ -18,6 +18,7 @@ class CreateUlaznicasTable extends Migration
             $table->dateTime('datumKupovine');
             $table->integer('kolicina')->default(1);
             $table->decimal('cena', 8, 2);
+            $table->timestamp('rezervisano_do')->nullable(); //potrebno za implementaciju reda cekanja
             $table->timestamps();
 
             

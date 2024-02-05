@@ -15,7 +15,7 @@ class Ulaznica extends Model
         'datumKupovine',
         'kolicina', //dodato je ovo polje kako bi jedan korisnik mogao da kupi npr 6 karata za jedan dogadjaj
         'cena', //ovaj podatak cemo izracunavati na osnovu broja kupljenih karata i tipa ulaznice i cene dogadjaja
-
+        'rezervisano_do' //ova kolona ce biti nullable timestamp, potrebna je za kreiranje reda cekanja
 
     ];
     public function tip()
@@ -29,7 +29,7 @@ class Ulaznica extends Model
     }
     public function dogadjaj()
     {
-        return $this->belongsTo(Dogadjaj::class);
+        return $this->belongsTo(Dogadjaj::class, 'dogadjaj_id');
     }
 
 
