@@ -34,6 +34,7 @@ Route::get('/dogadjaji/{id}', [DogadjajController::class, 'show']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::resource('tipoviDogadjaja', TipDogadjajaController::class);
     Route::resource('tipoviUlaznica', TipUlazniceController::class);
+    Route::get('/moje-ulaznice', [UlaznicaController::class, 'mojeUlaznice']);
     Route::resource('ulaznice', UlaznicaController::class);  
     
     Route::delete('/dogadjaji/{id}',[DogadjajController::class,'destroy']);
@@ -42,7 +43,7 @@ Route::middleware('auth:sanctum')->group(function () {
   
     Route::post('/logout', [AuthController::class, 'logout']);
 });
-
+ 
  
 
 

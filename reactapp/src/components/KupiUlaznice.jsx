@@ -13,6 +13,10 @@ const KupiUlaznice = () => {
         localStorage.setItem("dogadjaj_id",dogadjaj.id);
         localStorage.setItem("dogadjaj_cena",dogadjaj.cena);
     };
+    function zatvoriModal(){
+        setSelectedDogadjaj(null);
+
+    }
     if (loading) return <p>Učitavanje događaja...</p>;
     if (error) return <p>Došlo je do greške: {error.message}</p>;
     console.log(dogadjaji)
@@ -21,7 +25,7 @@ const KupiUlaznice = () => {
             {dogadjaji.map(dogadjaj => (
                  <DogadjajKartica key={dogadjaj.id} dogadjaj={dogadjaj} onKupiClick={handleKupiClick} />
             ))}
-              {selectedDogadjaj && <Modal dogadjaj={selectedDogadjaj} onClose={() => setSelectedDogadjaj(null)} />}
+              {selectedDogadjaj && <Modal dogadjaj={selectedDogadjaj} onClose={zatvoriModal } />}
         </div>
     );
 }

@@ -11,6 +11,7 @@ import TabelaDogadjaja from './components/TabelaDogadjaja';
 import NotFoundPage from './components/NotFoundPage';
 import KupiUlaznice from './components/KupiUlaznice';
 import Detalji from './components/Detalji';
+import MojeUlaznice from './components/MojeUlaznice';
 
 function App() {
   
@@ -23,6 +24,7 @@ function App() {
         <Navbar setToken={setToken} token={token}/>
         <Routes>
           <Route path="/" element={<Login  setToken={setToken}/>} />
+          <Route path="/mojeUlaznice" element={<MojeUlaznice />} />
           <Route path="/dogadjaji" element={<Dogadjaji />} />
           <Route path="/register" element={<Register />} />
           <Route path="/kupiUlaznicu" element={<KupiUlaznice />} />

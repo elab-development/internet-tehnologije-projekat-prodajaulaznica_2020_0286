@@ -41,6 +41,25 @@ class UlaznicaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function ocistiRedCekanja(){
+       
+        // Dobij sve rezervacije sa "rezervisano_do" različitim od null
+        $rezervacije = Ulaznica::whereNotNull('rezervisano_do')->get();
+
+        foreach ($rezervacije as $rezervacija) {
+          
+            $dogadjaj = Dogadjaj::find($rezervacija->dogadjaj);
+            $kapacitet = $dogadjaj->kapacitet;
+            $brojProdanihUlaznica = $dogadjaj->brojProdatihKarata();
+
+            if ($kapacitet > $brojProdanihUlaznica) {
+                // Postavi "rezervisano_do" na null
+                $rezervacija->update(['rezervisano_do' => null]);
+            }
+        }
+    }
+
+
     public function store(Request $request)  //ovo je metoda koja ce nam sluziti za kreiranje rezervacije za ulaznice, tj dodavanja ulaznica u red cekanja
     { 
         $validator = Validator::make($request->all(), [
@@ -78,7 +97,7 @@ class UlaznicaController extends Controller
             'kolicina' => $request->input('kolicina'),
             'rezervisano_do' => $rezervisano_do,
         ]);
-    
+        $this->ocistiRedCekanja();
         return response()->json([
             'message' => 'Ulaznice uspešno rezervisane',
             'ulaznica' => new UlaznicaResource($ulaznica),
@@ -172,4 +191,16 @@ class UlaznicaController extends Controller
 
         return response()->json(['message' => 'Ulaznica uspešno obrisana'], 200);
     }
+    public function mojeUlaznice() //vraca sve ulaznice ulogovanog korisnika
+        {
+            $user = Auth::user();
+
+            if (!$user) {
+                return response()->json(['message' => 'Nije pronađen ulogovan korisnik'], 404);
+            }
+
+            $ulaznice = Ulaznica::where('korisnik', $user->id)->get();
+
+            return UlaznicaResource::collection($ulaznice);
+        }
 }

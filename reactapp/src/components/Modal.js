@@ -93,6 +93,7 @@ const Modal = ({ dogadjaj, onClose }) => {
                 }
             });
             console.log(response)
+            alert("Rezervacija se obradjuje... Kada transakcija bude obradjena moci cete da preuzmete kartu na vasem profilu");
             onClose();  
         } catch (error) {
             console.error('Error creating ticket', error);
