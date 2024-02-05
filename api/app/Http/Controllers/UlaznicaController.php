@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class UlaznicaController extends Controller
@@ -62,46 +63,57 @@ class UlaznicaController extends Controller
 
     public function store(Request $request)  //ovo je metoda koja ce nam sluziti za kreiranje rezervacije za ulaznice, tj dodavanja ulaznica u red cekanja
     { 
-        $validator = Validator::make($request->all(), [
-            'dogadjaj' => 'required|exists:dogadjajs,id',
-            'tip' => 'required|exists:tip_ulaznices,id',
-            'datumKupovine' => 'required|date',
-            'cena' => 'required|numeric|min:1', 
-            'kolicina' => 'required|numeric|min:1',
-        ]);
-    
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 400);
-        }
-        $dogadjaj = Dogadjaj::find($request->input('dogadjaj'));
+        DB::beginTransaction();
+        try {
+            $validator = Validator::make($request->all(), [
+                'dogadjaj' => 'required|exists:dogadjajs,id',
+                'tip' => 'required|exists:tip_ulaznices,id',
+                'datumKupovine' => 'required|date',
+                'cena' => 'required|numeric|min:1', 
+                'kolicina' => 'required|numeric|min:1',
+            ]);
+        
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 400);
+            }
+            $dogadjaj = Dogadjaj::find($request->input('dogadjaj'));
 
-        if (!$dogadjaj) {
-            return response()->json(['message' => 'Dogadjaj nije pronadjen'], 404);
-        }
+            if (!$dogadjaj) {
+                return response()->json(['message' => 'Dogadjaj nije pronadjen'], 404);
+            }
 
-        // Provera kapaciteta i broja prodanih ulaznica
-        $kapacitet = $dogadjaj->kapacitet;
-        $brojProdanihUlaznica = Ulaznica::where('dogadjaj', $dogadjaj->id)->sum('kolicina');
+            // Provera kapaciteta i broja prodanih ulaznica
+            $kapacitet = $dogadjaj->kapacitet;
+            $brojProdanihUlaznica = Ulaznica::where('dogadjaj', $dogadjaj->id)->sum('kolicina');
 
-        if ($request->input('kolicina') + $brojProdanihUlaznica > $kapacitet) {
-            return response()->json(['message' => 'Nema dovoljno karata za ovaj dogadjaj'], 400);
+            if ($request->input('kolicina') + $brojProdanihUlaznica > $kapacitet) {
+                return response()->json(['message' => 'Nema dovoljno karata za ovaj dogadjaj'], 400);
+            }
+            $rezervisano_do = Carbon::now()->addHour();
+            $user = Auth::user(); // Dobijanje ulogovanog korisnika
+            $ulaznica = Ulaznica::create([
+                'dogadjaj' => $request->input('dogadjaj'),
+                'korisnik' => $user->id, // Postavljanje ID-a ulogovanog korisnika
+                'tip' => $request->input('tip'),
+                'datumKupovine' => $request->input('datumKupovine'),
+                'cena' => $request->input('cena'),
+                'kolicina' => $request->input('kolicina'),
+                'rezervisano_do' => $rezervisano_do,
+            ]);
+            $this->ocistiRedCekanja();
+            DB::commit(); // Potvrdi transakciju
+            return response()->json([
+                'message' => 'Ulaznice uspešno rezervisane',
+                'ulaznica' => new UlaznicaResource($ulaznica),
+            ], 201);
+        } catch (\Exception $e) {
+            DB::rollBack(); // Poništi transakciju ako dođe do izuzetka
+
+            return response()->json([
+                'message' => 'Došlo je do greške prilikom rezervacije ulaznica',
+                'error' => $e->getMessage(),
+            ], 500);
         }
-        $rezervisano_do = Carbon::now()->addHour();
-        $user = Auth::user(); // Dobijanje ulogovanog korisnika
-        $ulaznica = Ulaznica::create([
-            'dogadjaj' => $request->input('dogadjaj'),
-            'korisnik' => $user->id, // Postavljanje ID-a ulogovanog korisnika
-            'tip' => $request->input('tip'),
-            'datumKupovine' => $request->input('datumKupovine'),
-            'cena' => $request->input('cena'),
-            'kolicina' => $request->input('kolicina'),
-            'rezervisano_do' => $rezervisano_do,
-        ]);
-        $this->ocistiRedCekanja();
-        return response()->json([
-            'message' => 'Ulaznice uspešno rezervisane',
-            'ulaznica' => new UlaznicaResource($ulaznica),
-        ], 201);
     }
   
 
@@ -199,8 +211,9 @@ class UlaznicaController extends Controller
                 return response()->json(['message' => 'Nije pronađen ulogovan korisnik'], 404);
             }
 
-            $ulaznice = Ulaznica::where('korisnik', $user->id)->get();
-
+            $ulaznice = Ulaznica::where('korisnik', $user->id)
+            ->whereNull('rezervisano_do')  
+            ->get();
             return UlaznicaResource::collection($ulaznice);
         }
 }

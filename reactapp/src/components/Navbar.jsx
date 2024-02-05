@@ -42,7 +42,7 @@ const Navbar = ({token, setToken}) => {
             {token ? (
                 <>
                     <div onClick={() => navigate('/dogadjaji')}>Događaji</div>
-                    {userRole === 'admin' && <div onClick={() => navigate('/admin')}>Admin</div>}
+                    {localStorage.getItem('uloga') && <div onClick={() => navigate('/admin')}>Admin</div>}
                     {localStorage.getItem('uloga') === 'korisnik' && <div onClick={() => navigate('/kupiUlaznicu')}>Kupi ulaznicu</div>}
                     {localStorage.getItem('uloga') === 'korisnik' && <div onClick={() => navigate('/mojeUlaznice')}>Moje ulaznice</div>}
                     <div onClick={handleLogout}>Logout</div>
