@@ -14,13 +14,13 @@ class TipDogodjajaSeeder extends Seeder
      */
     public function run()
     {
-        $tipoviDogodjaja = [
-            'Koncert',
-            'Pozorišna predstava',
-            'Sportski događaj',
-            'Konferencija',
+        $tipoviDogodjaja = [  //prevedeno na engleski zbog apija za prikaz slika
+            'Concert',
+            'Theather',
+            'Sport',
+            'Conference',
             'Festival',
-            'Ostalo'
+            'Other'
         ];
 
         foreach ($tipoviDogodjaja as $tip) {
