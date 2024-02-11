@@ -1,0 +1,102 @@
+.main-container {
+    display: flex;
+    background-color: #95A78D;
+  }
+  
+
+.dogadjaji-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    background-color: #95A78D;  
+}
+
+
+.dogadjaji-wrapper {
+    padding: 20px;
+    margin: 0 40px;
+}
+
+ 
+
+.dogadjaj {
+    background-color: #C8C6AF;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.dogadjaj:hover {
+    transform: scale(1.03);
+}
+
+.dogadjaj img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+h2 {
+    color: #D7D0C8;
+    margin-bottom: 20px;
+}
+.pretraga-input {
+    padding: 10px;
+    margin: 20px;
+    border-radius: 8px;
+    border: 1px solid #D7D0C8;
+    width: calc(100% - 40px);  
+    box-sizing: border-box;
+}
+.filteri {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    margin-right: 20px; 
+    margin-top: 5%;  
+    width: 200px;  
+  }
+  
+  .filteri input[type="radio"] {
+    accent-color: #D7D0C8;  
+    margin-right: 8px;
+  }
+  
+  .filteri label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    cursor: pointer;
+  }
+  
+.dogadjaji-container, .dogadjaji-wrapper {
+    max-width: calc(100% - 240px); 
+    flex-grow: 1;  
+}
+
+.paginacija {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.paginacija button {
+    padding: 10px 15px;
+    margin: 0 5px;
+    background-color: #D7D0C8;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.paginacija button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.paginacija span {
+    margin: 0 10px;
+}

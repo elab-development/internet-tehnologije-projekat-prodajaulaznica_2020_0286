@@ -1,0 +1,36 @@
+.footer {
+    background-color: #95A78D;
+    color: #D7D0C8;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.footer-section {
+    flex: 1;
+}
+
+.footer-section h4 {
+    color: #F87666;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li a {
+    color: #D7D0C8;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links li a:hover {
+    color: #F87666;
+}
