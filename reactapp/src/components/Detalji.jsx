@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { Chart, ArcElement } from 'chart.js';
-
+ 
 
 import { Doughnut } from 'react-chartjs-2';
-Chart.register(ArcElement);
+import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
+Chart.register(ArcElement, Tooltip, Legend);
+
 const Detalji = () => {
     const { id } = useParams();
     const [dogadjaj, setDogadjaj] = useState(null);
@@ -58,6 +59,17 @@ const Detalji = () => {
             },
         ],
     };
+    const options = {
+        plugins: {
+            legend: {
+                display: true, // Ovo će prikazati legendu grafikona
+            },
+            tooltip: {
+                enabled: true, // Ovo omogućava tooltipove
+            },
+        },
+    };
+    
     console.log(data);
     return (
         <div className="detalji-container">
@@ -68,7 +80,7 @@ const Detalji = () => {
             <p>Kapacitet: {dogadjaj.kapacitet}</p>
             <p>Broj slobodnih mesta: {brojSlobodnihMesta}</p>
             <p>Popunjenost: {popunjenost.toFixed(2)}%</p>
-            <Doughnut data={data} key={dogadjaj.id} />
+            <Doughnut data={data}  options={options} key={dogadjaj.id} />
         </div>
     );
 };

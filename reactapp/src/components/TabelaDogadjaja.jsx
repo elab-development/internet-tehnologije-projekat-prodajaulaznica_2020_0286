@@ -6,11 +6,12 @@ import useDogadjaji from './useDogadjaji';
 import UnauthorizedPage from './UnauthorizedPage ';
 
 const TabelaDogadjaja = () => {
-    const { dogadjaji, loading, error,setDogadjaji} = useDogadjaji('http://127.0.0.1:8000/api/dogadjaji');
+    const { dogadjaji, loading, error, setDogadjaji } = useDogadjaji('http://127.0.0.1:8000/api/dogadjaji');
     const [prikaziModal, setPrikaziModal] = useState(false);
     const [isUpdating, setIsUpdating] = useState(false);
     const [pretragaKriterijum, setPretragaKriterijum] = useState("");
     const [sortDirection, setSortDirection] = useState("");
+    const [tipoviDogadjaja, setTipoviDogadjaja] = useState([]);
     const [noviDogadjaj, setNoviDogadjaj] = useState({
         naziv: '',
         datumVreme: '',
@@ -21,6 +22,24 @@ const TabelaDogadjaja = () => {
         tip: 6 // Ostalo
     });
 
+    useEffect(() => {
+        const fetchTipoviDogadjaja = async () => {
+            try {
+                const token = localStorage.getItem('authToken'); // Dohvati token iz session storage-a
+                const response = await axios.get('http://127.0.0.1:8000/api/tipoviDogadjaja', {
+                    headers: {
+                        Authorization: `Bearer ${token}` // Dodaj token u header
+                    }
+                });
+                setTipoviDogadjaja(response.data);
+            } catch (error) {
+                console.error('Error fetching tipovi događaja:', error);
+            }
+        };
+    
+        fetchTipoviDogadjaja();
+    }, []);
+    
 
     const handlePretragaInputChange = (e) => {
         setPretragaKriterijum(e.target.value);
@@ -30,13 +49,12 @@ const TabelaDogadjaja = () => {
         dogadjaj.naziv.toLowerCase().includes(pretragaKriterijum.toLowerCase()) ||
         dogadjaj.mesto.toLowerCase().includes(pretragaKriterijum.toLowerCase()) ||
         dogadjaj.organizator.toLowerCase().includes(pretragaKriterijum.toLowerCase())
-        
     );
+
     const sortirajDogadjaje = (direction) => {
         setSortDirection(direction);
         setDogadjaji(prevDogadjaji => {
             return [...prevDogadjaji].sort((a, b) => {
-                
                 const popunjenostA = (a.br_mesta / a.kapacitet) || 0;
                 const popunjenostB = (b.br_mesta / b.kapacitet) || 0;
 
@@ -48,6 +66,7 @@ const TabelaDogadjaja = () => {
             });
         });
     };
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setNoviDogadjaj(prevState => ({
@@ -58,7 +77,7 @@ const TabelaDogadjaja = () => {
 
     const openModalForAdd = () => {
         setIsUpdating(false);
-        setNoviDogadjaj({ naziv: '', datumVreme: '', mesto: '', organizator: '', kapacitet: '' });
+        setNoviDogadjaj({ naziv: '', datumVreme: '', mesto: '', organizator: '', kapacitet: '', tip: '' });
         setPrikaziModal(true);
     };
 
@@ -69,7 +88,6 @@ const TabelaDogadjaja = () => {
     };
 
     const saveDogadjaj = () => {
-        noviDogadjaj.tip=6;
         const token = localStorage.getItem('authToken');  
     
         if (isUpdating) {
@@ -100,17 +118,18 @@ const TabelaDogadjaja = () => {
                 });
         }
     };
-    
- 
+
     const obrisiDogadjaj = (id) => {
         setDogadjaji(prevDogadjaji => prevDogadjaji.filter(d => d.id !== id));
     };
+
     const userRole = localStorage.getItem('uloga');
 
     // Proveri ulogu i prikaži poruku ako je korisnik ili nema uloge
     if (userRole === 'korisnik' || !userRole) {
-        return <UnauthorizedPage></UnauthorizedPage>;
+        return <UnauthorizedPage />;
     }
+
     if (loading) return <p>Učitavanje događaja...</p>;
     if (error) return <p>Došlo je do greške: {error.message}</p>;
  
@@ -129,6 +148,19 @@ const TabelaDogadjaja = () => {
                             <input type="number" name="kapacitet" value={noviDogadjaj.kapacitet} onChange={handleInputChange} placeholder="Kapacitet" min="1" required />
                             <input type="number" name="cena" value={noviDogadjaj.cena} onChange={handleInputChange} placeholder="Osnovna cena" min="1" required />
                            
+                            {/* Padajući izbornik za odabir tipa događaja */}
+                            <select
+                                name="tip"
+                                value={noviDogadjaj.tip}
+                                onChange={handleInputChange}
+                                required
+                            >
+                                <option value="" disabled hidden>Odaberi tip događaja</option>
+                                {tipoviDogadjaja.map(tip => (
+                                    <option key={tip.id} value={tip.id}>{tip.nazivTipaDogadjaja}</option>
+                                ))}
+                            </select>
+                            
                             <button type="submit">{isUpdating ? 'Ažuriraj Događaj' : 'Sačuvaj Događaj'}</button>
                         </form>
                     </div>
